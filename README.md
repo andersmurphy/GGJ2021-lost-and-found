@@ -8,15 +8,17 @@ https://nodejs.org/en/
 
 Install http-server:
 
-`npm install -g http-server`
+`npm install -g live-server`
 
 Start server in project root:
 
-`http-server -c-1`
+`live-server`
 
 Got to:
 
 http://localhost:8080
+
+Server will automatically reload browser on changes.
 
 ## Deploy
 
