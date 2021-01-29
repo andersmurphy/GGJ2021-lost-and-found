@@ -11,8 +11,8 @@ document.body.appendChild(app.view)
 app.loader.add('planet', 'planet.png').load((loader, resources) => {
   // This creates a texture from a 'planet.png' image
   const planet = new PIXI.Sprite(resources.planet.texture)
-  planet.width = 200
-  planet.height = 200
+  planet.width = 300
+  planet.height = 300
 
   // Setup the position of the planet
   planet.x = app.renderer.width / 2
@@ -25,9 +25,40 @@ app.loader.add('planet', 'planet.png').load((loader, resources) => {
   // Add the planet to the scene we are building
   app.stage.addChild(planet)
 
-  // Listen for frame updates
-  app.ticker.add(() => {
-    // each frame we spin the planet around a bit
-    planet.rotation += 0.01
-  })
+  let state = { planetRotation: 0.00 }
+
+  const gameLoop = _ => {
+    planet.rotation += state.planetRotation
+  }
+
+  app.ticker.add(delta => gameLoop(delta))
+
+  const upListener = event => {
+    switch (event.key) {
+      case "a":
+        state.planetRotation = 0
+        break;
+      case "d":
+        state.planetRotation = 0
+        break;
+      default:
+    }
+  }
+
+  const downListener = event => {
+    switch (event.key) {
+      case "a":
+        state.planetRotation = 0.05
+        break;
+      case "d":
+        state.planetRotation = -0.05
+        break;
+      default:
+    }
+  }
+
+  document.addEventListener("keydown", downListener, false)
+  document.addEventListener("keyup", upListener, false)
+
+
 })
