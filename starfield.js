@@ -3,6 +3,7 @@ var starfieldContainer = null
 // let starTimers = []
 
 const startStarfield = () => {
+    const colors = [0x98b5c6, 0xfdfde6, 0xffffff, 0xfafabc, 0xfafa92, 0x7ec3f2, 0xa1d6f9]
     starfieldContainer = new PIXI.Container()
 
     starfieldContainer.position.x = 0
@@ -17,7 +18,7 @@ const startStarfield = () => {
     const w = app.renderer.width - starWidth
     const h = app.renderer.height - starHeight
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 200; i++) {
         const star = new PIXI.AnimatedSprite([
             app.loader.resources.star1.texture, 
             app.loader.resources.star2.texture, 
@@ -28,11 +29,13 @@ const startStarfield = () => {
 
         star.position.x = x
         star.position.y = y
-        star.width = Math.ceil(Math.random() * starWidth)
+        star.width = Math.ceil(Math.random() * starWidth) + 1
         star.height = star.width + 2// Math.max(star.width, Math.ceil(Math.random() * starHeight))
         starfieldContainer.addChild(star)
         //stars.push(star)
         //starTimers.push(Math.random())
+        var colorIndex = Math.floor(Math.random() * colors.length)
+        star.tint = colors[colorIndex]
 
         star.animationSpeed = Math.random() * 0.1
         if (Math.random() > 0.5) {
