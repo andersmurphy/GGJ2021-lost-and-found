@@ -12,10 +12,12 @@ const showSnakeDialog = () => {
     let container = new PIXI.Container();
     let background = new PIXI.Sprite(app.loader.resources.DialogBackground.texture)
 
-    container.width = 584
-    container.height = 348
+    background.width = 584
+    background.height = 320
     container.x = 8
     container.y = 8
+    container.height = background.height
+    container.width = background.width
 
     container.addChild(background);
 
