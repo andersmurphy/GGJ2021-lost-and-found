@@ -1,6 +1,8 @@
 var starfieldContainer = null
-// let stars = []
-// let starTimers = []
+let stars = []
+let starSpeeds = []
+var starSpeedX = 0
+var starSpeedY = 0
 
 const startStarfield = () => {
     const colors = [0x98b5c6, 0xfdfde6, 0xffffff, 0xfafabc, 0xfafa92, 0x7ec3f2, 0xa1d6f9]
@@ -31,8 +33,12 @@ const startStarfield = () => {
         star.position.y = y
         star.width = Math.ceil(Math.random() * starWidth) + 1
         star.height = star.width + 2// Math.max(star.width, Math.ceil(Math.random() * starHeight))
+
+        var speed = 1 / Math.max(1, (starWidth - star.width) * 2)
+
         starfieldContainer.addChild(star)
-        //stars.push(star)
+        stars.push(star)
+        starSpeeds.push(speed)
         //starTimers.push(Math.random())
         var colorIndex = Math.floor(Math.random() * colors.length)
         star.tint = colors[colorIndex]
@@ -47,5 +53,40 @@ const startStarfield = () => {
 }
 
 const starfieldTwinkles = delta => {
+    if (starSpeedX != 0
+        || starSpeedY != 0) {
+            const w = app.renderer.width
+            const h = app.renderer.height
+            var goneOffscreen = []
 
+            for (let i = 0; i < stars.length; i++) {
+                const star = stars[i]
+                const starSpeed = starSpeeds[i]
+                star.position.x += delta * starSpeedX * starSpeed
+                star.position.y += delta * starSpeedX * starSpeed
+
+                if (star.position.x < 0
+                    || star.position.x >= w
+                    || star.position.y < 0
+                    || star.position.y >= h) {
+                        goneOffscreen.push(star)
+                    }
+            };
+
+            goneOffscreen.forEach(star => {
+                if (star.position.x < 0) {
+                    star.position.x = w
+                    star.position.y = Math.floor(Math.random() * h)
+                } else if (star.position.x >= w) {
+                    star.position.x = 0
+                    star.position.y = Math.floor(Math.random() * h)
+                } else if (star.position.y < 0) {
+                    star.position.y = h
+                    star.position.x = Math.floor(Math.random() * w)
+                } else if (star.position.y >= h) {
+                    star.position.y = 0
+                    star.position.x = Math.floor(Math.random() * w)
+                }
+            });
+        }
 }
