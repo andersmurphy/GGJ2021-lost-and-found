@@ -1,3 +1,5 @@
+//import { Container } from '@pixi/display';
+
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
 // and the root stage PIXI.Container
@@ -68,19 +70,23 @@ app.loader
 
   const showSnakeDialog = () => {
     // add dialog box beside prince
+    let container = new PIXI.Container();
     let background = new PIXI.Sprite(app.loader.resources.DialogBackground.texture)
 
-    background.width = 600
-    background.height = 300
-    background.x = 5
-    background.y = 5
+    container.width = 600
+    container.height = 300
+    container.x = 8
+    container.y = 8
 
-    app.stage.addChild(background)
+    container.addChild(background);
+
+    app.stage.addChild(container)
     // run ink script 
+    loadStory(helloWorldStoryContent, container)
   }
 
   const interactionListener = _ => {
-    if (!didMeetSnake) { // Faking it: When the prince collides with another character a dialog appears
+    if (!didMeetSnake) { // Faking it: When the prince interacts with another character a dialog appears
         didMeetSnake = true
         showSnakeDialog()
     }
