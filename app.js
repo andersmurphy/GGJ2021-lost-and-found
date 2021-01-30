@@ -15,13 +15,17 @@ document.body.appendChild(app.view)
 app.loader
   .add('planet', 'assets/planet.png')
   .add('princeStand', 'assets/Prince_Idle_190.png')
-  .add('princeWalk1', 'assets/Prince_Idle_190.png')
-  .add('princeWalk2', 'assets/Prince_Idle_190.png')
+  .add('princeWalk1', 'assets/Prince_Walk_1.png')
+  .add('princeWalk2', 'assets/Prince_Walk_2.png')
   .add('tree', 'assets/tree.png')
   .add('DialogBackground', 'assets/DialogBackground.png')
   .add('ButtonNormal', 'assets/ButtonNormal.png')
   .add('ButtonActive', 'assets/ButtonActive.png')
   .add('ButtonSelected', 'assets/ButtonSelected.png')
+  .add('star1', 'assets/star1.png')
+  .add('star2', 'assets/star2.png')
+  .add('star3', 'assets/star3.png')
+  .add('star4', 'assets/star4.png')
   .load((loader, resources) => {
 
     // Planet
@@ -46,6 +50,8 @@ app.loader
     tree2.x = 600
     tree2.y = 0
     tree2.rotation = Math.PI / 2
+
+    startStarfield()
 
     // Planet Container
     const planetContainer = new PIXI.Container()
@@ -103,7 +109,7 @@ app.loader
         case "a":
           thunk = () => {
             planetContainer.rotation += 0.05
-            prince.scale.x = -1
+            prince.scale.x = 1
             if (!prince.playing) {
               prince.textures =
                 [resources.princeWalk1.texture,
@@ -115,7 +121,7 @@ app.loader
         case "d":
           thunk = () => {
             planetContainer.rotation += -0.05
-            prince.scale.x = 1
+            prince.scale.x = -1
             if (!prince.playing) {
               prince.textures =
                 [resources.princeWalk1.texture,
@@ -131,4 +137,5 @@ app.loader
     document.addEventListener("keydown", downListener, false)
     document.addEventListener("keyup", upListener, false)
     app.ticker.add(interactionListener)
+    app.ticker.add(starfieldTwinkles)
   })
