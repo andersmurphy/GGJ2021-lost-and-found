@@ -85,13 +85,14 @@ const continueStory = (firstTime) => {
         let buttonNormal = new PIXI.NineSlicePlane(app.loader.resources.ButtonNormal.texture, 7, 7, 7, 7);
         //let buttonActive = new PIXI.NineSlicePlane(PIXI.Sprite(app.loader.resources.ButtonActive.texture), 7, 7, 7, 7);
         //let buttonSelected = new PIXI.NineSlicePlane(PIXI.Sprite(app.loader.resources.ButtonSelected.texture), 7, 7, 7, 7);
+        var contentWidth = storyContainer.width - padding * 2
         
         continueButton.x = padding
         continueButton.y = storyContainer.height - buttonHeight - padding
         
         buttonNormal.x = 0
         buttonNormal.y = 0
-        buttonNormal.width = (storyContainer.width - padding * 2)
+        buttonNormal.width = contentWidth
         buttonNormal.height = buttonHeight
         continueButton.addChild(buttonNormal)
 
@@ -107,11 +108,24 @@ const continueStory = (firstTime) => {
         currentlyShowingText = story.Continue();
         // var tags = story.currentTags;
         
-        const basicText = new PIXI.Text(currentlyShowingText);
-        basicText.x = 8;
-        basicText.y = 8;
+        // const basicText = new PIXI.Text(currentlyShowingText);
+        // basicText.x = 8;
+        // basicText.y = 8;
 
-        storyContainer.addChild(basicText)
+        let style = new PIXI.TextStyle({fontFamily : 'Arial', fontSize: 24, fill : 0x101010, align : 'left'})
+        //let textMetrics = PIXI.TextMetrics.measureText('Your text', style)
+
+        //storyContainer.addChild(basicText)
+        console.log("contentWidth: " + contentWidth)
+        var lines = LayedOutText(currentlyShowingText, style, contentWidth, "left")
+        var lineY = padding;
+
+        lines.forEach(line => {
+            line.y = lineY
+            storyContainer.addChild(line);
+            lineY += line.height
+            lineY += padding
+        });
         storyContainer.addChild(continueButton);
 
         // // Any special tags included with this line
@@ -209,16 +223,104 @@ const continueStory = (firstTime) => {
     //     scrollDown(previousBottomEdge);
 }
 
-const restart = () => {
-    story.ResetState();
+const LayedOutText = (text, font, width, alignment) => {
+    var result = []
+    var lines = text.split('\n')
+    var spaceWidth = PIXI.TextMetrics.measureText(' ', font).width
+    var wordIndex = 0
+    var displayLine = ""
+    var displayLineWidth = 0
+    var words = []
+    var wordCount = 0
 
-    //setVisible(".header", true);
+    const addWordToLines = (word) => {
+        console.log("Word: " + word)
+        var wordWidth = PIXI.TextMetrics.measureText(word, font).width
 
-    continueStory(true);
+        console.log("displayLineWidth: " + displayLineWidth)
+        console.log("wordWidth: " + wordWidth)
+        //console.log("Total width: " + Math.floor(displayLineWidth + wordWidth))
+        if (Math.floor(displayLineWidth + wordWidth) >= width)
+        {
+            displayLine = displayLine.trim()
+            console.log("displayLine: " + displayLine)
+            if (wordIndex === wordCount - 1
+                && wordCount > 1)
+            {
+                console.log("Orphan")
+                var previousWord = words[wordIndex - 1]
 
-    //outerScrollContainer.scrollTo(0, 0);
+                console.log("previousWord: " + previousWord)
+                displayLine = displayLine.substr(0, displayLine.length - previousWord.length)
+                displayLine = displayLine.trim()
+                console.log("displayLine: " + displayLine)
+                result.push(CreateLine(displayLine, font, width, alignment))
+                displayLine = previousWord + " " + word
+                console.log("displayLine: " + displayLine)
+                result.push(CreateLine(displayLine, font, width, alignment))
+                displayLine = ""
+                displayLineWidth = 0
+                return
+            }
+            result.push(CreateLine(displayLine, font, width, alignment))
+            displayLine = ""
+            displayLineWidth = 0
+        }
+        ++wordIndex
+        displayLine += word + " "
+        displayLineWidth += wordWidth + spaceWidth
+    }
+
+    const breakLine = (line) => {
+        words = line.split(' ')
+        wordCount = words.length
+        
+        displayLine = ""
+        displayLineWidth = 0
+
+        if (wordCount === 0)
+        {
+            result.push(CreateLine(displayLine, font, width, alignment))
+            return
+        }
+
+        wordIndex = 0
+        words.forEach(addWordToLines)
+
+        displayLine = displayLine.trim()
+        if (displayLine.length > 0)
+        {
+            result.push(CreateLine(displayLine, font, width, alignment))
+            displayLine = ""
+            displayLineWidth = 0
+        }
+    }
+
+    lines.forEach(breakLine)
+
+    result.forEach(line => {
+        console.log("L: " + line.text)
+    });
+    return result;
 }
 
-const updateStory = (_) => {
-    continueStory(false);
+const CreateLine = (displayLine, font, width, alignment) => {
+    const label = new PIXI.Text(displayLine, font)
+    label.x = padding
+
+    return label;
 }
+
+// const restart = () => {
+//     story.ResetState();
+
+//     //setVisible(".header", true);
+
+//     continueStory(true);
+
+//     //outerScrollContainer.scrollTo(0, 0);
+// }
+
+// const updateStory = (_) => {
+//     continueStory(false);
+// }
