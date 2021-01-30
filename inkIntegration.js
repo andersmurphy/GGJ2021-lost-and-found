@@ -144,7 +144,7 @@ const showNextPieceOfStory = (firstTime) => {
         }
     }
     else if (!story.canContinue
-             && story.currentChoices.length > 0)
+             && areNewChoices())
     {
         showChoices()
     }
@@ -192,9 +192,7 @@ const showChoices = () => {
 
 const areNewChoices = () => {
     return story.currentChoices.length > 0
-        && (presentedChoices.length = 0
-            || presentedChoices.length != story.currentChoices.length
-            || !arraysEqual(presentedChoices, story.currentChoices.map(choice => choice.text)))
+        && !arraysEqual(presentedChoices, story.currentChoices.map(choice => choice.text))
 }
 
 function arraysEqual(a, b) {
@@ -241,7 +239,8 @@ const makeButton = (text, width, height) => {
     let buttonActive = new PIXI.NineSlicePlane(app.loader.resources.ButtonActive.texture, 7, 7, 7, 7);
     let buttonSelected = new PIXI.NineSlicePlane(app.loader.resources.ButtonSelected.texture, 7, 7, 7, 7);
     let font = new PIXI.TextStyle({fontFamily : 'Arial', fontSize: 24, fill : 0xEFEFEF, align : 'center'})
-    const label = new PIXI.Text(text, font)
+    console.log(text)
+    const label = new PIXI.HTMLText(text, font)
 
     label.x = (width / 2) - (label.width / 2)
     label.y = (height / 2) - (label.height / 2)
@@ -349,7 +348,7 @@ const LayedOutText = (text, font, width, alignment) => {
 }
 
 const CreateLine = (displayLine, font, width, alignment) => {
-    const label = new PIXI.Text(displayLine, font)
+    const label = new PIXI.HTMLText(displayLine, font)// new PIXI.Text(displayLine, font)
     label.x = padding
 
     return label;
