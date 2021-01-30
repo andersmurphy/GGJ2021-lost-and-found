@@ -43,9 +43,7 @@ var storyContainer = new PIXI.Container()
 
 const loadStory = (storyContent, container) => {
     story = new inkjs.Story(storyContent);
-    // Kick off the start of the story!
     storyContainer = container
-    //console.log("Len: " + storyContainer.children.length)
     if (storyContainer.children.length > 1) {
         storyContainer.removeChildren(1, storyContainer.children.length - 1)
     }
@@ -54,7 +52,6 @@ const loadStory = (storyContent, container) => {
 }
 
 const onContinue = () => {
-    console.log("onContinue")
     currentlyShowingText = null
 }
 
@@ -64,12 +61,6 @@ const padding = 8
 // Main story processing function. Each time this is called it generates
 // a new piece of text to show
 const continueStory = (firstTime) => {
-
-    var paragraphIndex = 0;
-    var delay = 0.0;
-    
-    // Don't over-scroll past new content
-    //var previousBottomEdge = firstTime ? 0 : contentBottomEdgeY();
 
     // Generate story text - loop through available content
     if (story.canContinue
@@ -106,17 +97,8 @@ const continueStory = (firstTime) => {
         
         // Get ink to generate the next paragraph
         currentlyShowingText = story.Continue();
-        // var tags = story.currentTags;
         
-        // const basicText = new PIXI.Text(currentlyShowingText);
-        // basicText.x = 8;
-        // basicText.y = 8;
-
         let style = new PIXI.TextStyle({fontFamily : 'Arial', fontSize: 24, fill : 0x101010, align : 'left'})
-        //let textMetrics = PIXI.TextMetrics.measureText('Your text', style)
-
-        //storyContainer.addChild(basicText)
-        console.log("contentWidth: " + contentWidth)
         var lines = LayedOutText(currentlyShowingText, style, contentWidth, "left")
         var lineY = padding;
 
@@ -128,6 +110,7 @@ const continueStory = (firstTime) => {
         });
         storyContainer.addChild(continueButton);
 
+        // var tags = story.currentTags;
         // // Any special tags included with this line
         // var customClasses = [];
         // for(var i=0; i<tags.length; i++) {
@@ -234,29 +217,21 @@ const LayedOutText = (text, font, width, alignment) => {
     var wordCount = 0
 
     const addWordToLines = (word) => {
-        console.log("Word: " + word)
         var wordWidth = PIXI.TextMetrics.measureText(word, font).width
 
-        console.log("displayLineWidth: " + displayLineWidth)
-        console.log("wordWidth: " + wordWidth)
-        //console.log("Total width: " + Math.floor(displayLineWidth + wordWidth))
         if (Math.floor(displayLineWidth + wordWidth) >= width)
         {
             displayLine = displayLine.trim()
-            console.log("displayLine: " + displayLine)
             if (wordIndex === wordCount - 1
                 && wordCount > 1)
             {
-                console.log("Orphan")
+                // Don't have orphan words on their own line
                 var previousWord = words[wordIndex - 1]
 
-                console.log("previousWord: " + previousWord)
                 displayLine = displayLine.substr(0, displayLine.length - previousWord.length)
                 displayLine = displayLine.trim()
-                console.log("displayLine: " + displayLine)
                 result.push(CreateLine(displayLine, font, width, alignment))
                 displayLine = previousWord + " " + word
-                console.log("displayLine: " + displayLine)
                 result.push(CreateLine(displayLine, font, width, alignment))
                 displayLine = ""
                 displayLineWidth = 0
@@ -298,9 +273,6 @@ const LayedOutText = (text, font, width, alignment) => {
 
     lines.forEach(breakLine)
 
-    result.forEach(line => {
-        console.log("L: " + line.text)
-    });
     return result;
 }
 
@@ -311,16 +283,16 @@ const CreateLine = (displayLine, font, width, alignment) => {
     return label;
 }
 
-// const restart = () => {
-//     story.ResetState();
+const restart = () => {
+    story.ResetState();
 
-//     //setVisible(".header", true);
+    //setVisible(".header", true);
 
-//     continueStory(true);
+    continueStory(true);
 
-//     //outerScrollContainer.scrollTo(0, 0);
-// }
+    //outerScrollContainer.scrollTo(0, 0);
+}
 
-// const updateStory = (_) => {
-//     continueStory(false);
-// }
+const updateStory = (_) => {
+    continueStory(false);
+}
