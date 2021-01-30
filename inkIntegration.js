@@ -242,9 +242,13 @@ const makeButton = (text, width, height) => {
     let buttonSelected = new PIXI.NineSlicePlane(app.loader.resources.ButtonSelected.texture, 7, 7, 7, 7);
     let font = new PIXI.TextStyle({fontFamily : 'Arial', fontSize: 24, fill : 0xEFEFEF, align : 'center'})
     const label = new PIXI.HTMLText(text, font)
+    let darkFont = new PIXI.TextStyle({fontFamily : 'Arial', fontSize: 24, fill : 0x101010, align : 'center'})
+    const darkLabel = new PIXI.HTMLText(text, darkFont)
 
     label.x = (width / 2) - (label.width / 2)
     label.y = (height / 2) - (label.height / 2)
+    darkLabel.x = (width / 2) - (darkLabel.width / 2)
+    darkLabel.y = (height / 2) - (darkLabel.height / 2)
 
     buttonNormal.width = width
     buttonNormal.height = height
@@ -272,7 +276,7 @@ const makeButton = (text, width, height) => {
     button.on('mousedown', (event) => {
         button.removeChildren()
         button.addChild(buttonSelected)
-        button.addChild(label)
+        button.addChild(darkLabel)
     });
 
     return button
