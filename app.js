@@ -16,7 +16,7 @@ app.loader.add('planet', 'planet.png').load((loader, resources) => {
 
   // Setup the position of the planet
   planet.x = app.renderer.width / 2
-  planet.y = app.renderer.height + 200
+  planet.y = app.renderer.height + 320
 
   // Rotate around the center
   planet.anchor.x = 0.5
