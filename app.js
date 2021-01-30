@@ -33,41 +33,42 @@ app.loader
     app.stage.addChild(planet)
 
     // Prince
-    const prince = new PIXI.Sprite(resources.princeStand.texture)
+    const prince = new PIXI.AnimatedSprite([resources.princeStand.texture])
     prince.width = 100
     prince.height = 100
     prince.x = app.renderer.width / 2
-    prince.y = app.renderer.height - 250
+    prince.y = app.renderer.height - 230
     prince.anchor.x = 0.5
     prince.anchor.y = 0.5
+    prince.animationSpeed = 0.1
     app.stage.addChild(prince)
 
-    let state =
-    {
-      planetRotation: 0,
-      prince: {
-        stance: "princeStand",
-        direction: 1
-      }
+    let thunk = () => {
+      planet.rotation = 0
+      prince.textures = [resources.princeStand.texture]
+      prince.scale.x = 1
     }
 
-    app.ticker.add(
-      () => {
-        planet.rotation += state.planetRotation
-        prince.texture = resources[state.prince.stance].texture
-        prince.scale.x = state.prince.direction
-      })
+    app.ticker.add(() => thunk())
 
     const upListener = event => {
       switch (event.key) {
         case "a":
-          state.planetRotation = 0
-          state.prince.stance = "princeStand"
-          break;
+          thunk = () => {
+            if (prince.playing) {
+              prince.textures = [resources.princeStand.texture]
+              prince.stop()
+            }
+          }
+          break
         case "d":
-          state.planetRotation = 0
-          state.prince.stance = "princeStand"
-          break;
+          thunk = () => {
+            if (prince.playing) {
+              prince.textures = [resources.princeStand.texture]
+              prince.stop()
+            }
+          }
+          break
         default:
       }
     }
@@ -75,15 +76,29 @@ app.loader
     const downListener = event => {
       switch (event.key) {
         case "a":
-          state.planetRotation = 0.05
-          state.prince.stance = "princeWalk1"
-          state.prince.direction = -1
-          break;
+          thunk = () => {
+            planet.rotation += 0.05
+            prince.scale.x = -1
+            if (!prince.playing) {
+              prince.textures =
+                [resources.princeWalk1.texture,
+                resources.princeWalk2.texture]
+              prince.play()
+            }
+          }
+          break
         case "d":
-          state.planetRotation = -0.05
-          state.prince.stance = "princeWalk1"
-          state.prince.direction = 1
-          break;
+          thunk = () => {
+            planet.rotation += -0.05
+            prince.scale.x = 1
+            if (!prince.playing) {
+              prince.textures =
+                [resources.princeWalk1.texture,
+                resources.princeWalk2.texture]
+              prince.play()
+            }
+          }
+          break
         default:
       }
     }
