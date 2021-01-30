@@ -74,7 +74,17 @@ app.loader
       prince.scale.x = 1
     }
 
-    app.ticker.add(() => thunk())
+    const rotationTo2PI = rotation => rotation % (2 * Math.PI) * -1
+
+    app.ticker.add(
+      () => {
+        let r = rotationTo2PI(planetContainer.rotation)
+        if (r > 3 && 3.4 > r) {
+          console.log("hello")
+        } else {
+        }
+        thunk()
+      })
 
     const upListener = event => {
       switch (event.key) {
@@ -103,7 +113,7 @@ app.loader
         case "a":
           thunk = () => {
             planetContainer.rotation += 0.05
-            prince.scale.x = -1
+            prince.scale.x = 1
             if (!prince.playing) {
               prince.textures =
                 [resources.princeWalk1.texture,
@@ -115,7 +125,7 @@ app.loader
         case "d":
           thunk = () => {
             planetContainer.rotation += -0.05
-            prince.scale.x = 1
+            prince.scale.x = -1
             if (!prince.playing) {
               prince.textures =
                 [resources.princeWalk1.texture,
