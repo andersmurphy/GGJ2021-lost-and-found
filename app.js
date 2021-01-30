@@ -8,7 +8,7 @@ const app = new PIXI.Application(
     height: 720,
     antialias: true,
   })
-var didMeetSnake = false
+var didMeetSnake = true
   
 // The application will create a canvas element for you that you
 // can then insert into the DOM
