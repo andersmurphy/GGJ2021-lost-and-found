@@ -80,7 +80,17 @@ app.loader
       prince.scale.x = 1
     }
 
-    app.ticker.add(() => thunk())
+    const rotationTo2PI = rotation => rotation % (2 * Math.PI) * -1
+
+    app.ticker.add(
+      () => {
+        let r = rotationTo2PI(planetContainer.rotation)
+        if (r > 3 && 3.4 > r) {
+          console.log("hello")
+        } else {
+        }
+        thunk()
+      })
 
     const upListener = event => {
       switch (event.key) {
