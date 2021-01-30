@@ -62,7 +62,7 @@ app.loader
     prince.width = resources.princeStand.texture.width
     prince.height = resources.princeStand.texture.height
     prince.x = app.renderer.width / 2
-    prince.y = app.renderer.height - 230
+    prince.y = app.renderer.height - 260
     prince.anchor.x = 0.5
     prince.anchor.y = 0.5
     prince.animationSpeed = 0.1
