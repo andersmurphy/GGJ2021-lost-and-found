@@ -15,7 +15,7 @@ const showSnakeDialog = () => {
     background.width = 584
     background.height = 320
     container.x = 8
-    container.y = 8
+    container.y = 70
     container.height = background.height
     container.width = background.width
 
