@@ -4,6 +4,7 @@
 const app = new PIXI.Application(
   { width: 1280,
     height: 720,
+    antialias: true,
   })
 
 // The application will create a canvas element for you that you
@@ -21,7 +22,7 @@ app.loader
 
   // Setup the position of the planet
   planet.x = app.renderer.width / 2
-  planet.y = app.renderer.height + 320
+  planet.y = app.renderer.height + app.renderer.height / 3
 
   // Rotate around the center
   planet.anchor.x = 0.5
