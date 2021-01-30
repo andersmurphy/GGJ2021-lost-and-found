@@ -40,14 +40,13 @@ const emptyStory = ﻿{"inkVersion":19,"root":[["end",["done",{"#f":5,"#n":"g-0"
 var story = new inkjs.Story(emptyStory);
 var currentlyShowingText = null
 var storyContainer = new PIXI.Container()
+var excessLines = []
 
 const loadStory = (storyContent, container) => {
     story = new inkjs.Story(storyContent);
+    excessLines = []
     storyContainer = container
-    if (storyContainer.children.length > 1) {
-        storyContainer.removeChildren(1, storyContainer.children.length - 1)
-    }
-
+    clearDialog()
     continueStory(true);
 }
 
@@ -58,24 +57,25 @@ const onContinue = () => {
 const buttonHeight = 44
 const padding = 8
 
-// Main story processing function. Each time this is called it generates
-// a new piece of text to show
 const continueStory = (firstTime) => {
 
-    // Generate story text - loop through available content
+    if (excessLines.length > 0) {
+
+    } else {
+        showNextPieceOfStory(firstTime)
+    }
+}
+
+const showNextPieceOfStory = (firstTime) => {
     if (story.canContinue
         && story.currentText != currentlyShowingText) {
 
-        if (storyContainer.children.length > 1) {
-            storyContainer.removeChildren(1, storyContainer.children.length - 1)
-        }
+        clearDialog()
         
         let continueButton = new PIXI.Container()
-        // let normal = new PIXI.Sprite(app.loader.resources.ButtonNormal.texture)
-        // normal.texture.orig = new PIXI.Rectangle(15, 15, 15, 15)
         let buttonNormal = new PIXI.NineSlicePlane(app.loader.resources.ButtonNormal.texture, 7, 7, 7, 7);
-        //let buttonActive = new PIXI.NineSlicePlane(PIXI.Sprite(app.loader.resources.ButtonActive.texture), 7, 7, 7, 7);
-        //let buttonSelected = new PIXI.NineSlicePlane(PIXI.Sprite(app.loader.resources.ButtonSelected.texture), 7, 7, 7, 7);
+        let buttonActive = new PIXI.NineSlicePlane(app.loader.resources.ButtonActive.texture, 7, 7, 7, 7);
+        let buttonSelected = new PIXI.NineSlicePlane(app.loader.resources.ButtonSelected.texture, 7, 7, 7, 7);
         var contentWidth = storyContainer.width - padding * 2
         
         continueButton.x = padding
@@ -85,16 +85,32 @@ const continueStory = (firstTime) => {
         buttonNormal.y = 0
         buttonNormal.width = contentWidth
         buttonNormal.height = buttonHeight
+
+        buttonActive.width = contentWidth
+        buttonActive.height = buttonHeight
+
+        buttonSelected.width = contentWidth
+        buttonSelected.height = buttonHeight
+
         continueButton.addChild(buttonNormal)
 
         continueButton.interactive = true
-        continueButton.on('tap', (event) => {
+        continueButton.on('mouseover', (event) => {
+            continueButton.removeChildren()
+            continueButton.addChild(buttonActive)
+        });
+        continueButton.on('mouseout', (event) => {
+            continueButton.removeChildren()
+            continueButton.addChild(buttonNormal)
+        });
+        continueButton.on('mousedown', (event) => {
+            continueButton.removeChildren()
+            continueButton.addChild(buttonSelected)
+        });
+        continueButton.on('mouseup', (event) => {
             onContinue()
         });
-        continueButton.on('click', (event) => {
-            onContinue()
-        });
-        
+
         // Get ink to generate the next paragraph
         currentlyShowingText = story.Continue();
         
@@ -296,3 +312,9 @@ const restart = () => {
 const updateStory = (_) => {
     continueStory(false);
 }
+function clearDialog() {
+    if (storyContainer.children.length > 1) {
+        storyContainer.removeChildren(1, storyContainer.children.length - 1)
+    }
+}
+
