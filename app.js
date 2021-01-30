@@ -18,6 +18,9 @@ document.body.appendChild(app.view)
 app.loader
     .add('planet', 'planet.png')
     .add('DialogBackground', 'DialogBackground.png')
+    .add('ButtonNormal', 'ButtonNormal.png')
+    .add('ButtonActive', 'ButtonActive.png')
+    .add('ButtonSelected', 'ButtonSelected.png')
     .load((loader, resources) => {
   // This creates a texture from a 'planet.png' image
   //dialogBackground = new PIXI.Sprite(resources.DialogBackground.texture)
@@ -75,8 +78,9 @@ app.loader
     let container = new PIXI.Container();
     let background = new PIXI.Sprite(app.loader.resources.DialogBackground.texture)
 
-    container.width = 600
-    container.height = 300
+
+    container.width = 584
+    container.height = 348
     container.x = 8
     container.y = 8
 
@@ -85,6 +89,11 @@ app.loader
     app.stage.addChild(container)
     // run ink script 
     loadStory(helloWorldStoryContent, container)
+
+    app.ticker.add(
+      () => {
+        continueStory(false)
+      })
   }
 
   const interactionListener = _ => {

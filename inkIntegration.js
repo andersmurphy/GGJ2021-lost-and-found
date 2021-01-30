@@ -8,15 +8,28 @@
 
 const emptyStory = ﻿{"inkVersion":19,"root":[["end",["done",{"#f":5,"#n":"g-0"}],null],"done",{"#f":1}],"listDefs":{}};
 var story = new inkjs.Story(emptyStory);
-var currentlyShowingText = ""
-var storyContainer = null
+var currentlyShowingText = null
+var storyContainer = new PIXI.Container()
 
 const loadStory = (storyContent, container) => {
     story = new inkjs.Story(storyContent);
     // Kick off the start of the story!
     storyContainer = container
+    //console.log("Len: " + storyContainer.children.length)
+    if (storyContainer.children.length > 1) {
+        storyContainer.removeChildren(1, storyContainer.children.length - 1)
+    }
+
     continueStory(true);
 }
+
+const onContinue = () => {
+    console.log("onContinue")
+    currentlyShowingText = null
+}
+
+const buttonHeight = 44
+const padding = 8
 
 // Main story processing function. Each time this is called it generates
 // a new piece of text to show
@@ -26,12 +39,40 @@ const continueStory = (firstTime) => {
     var delay = 0.0;
     
     // Don't over-scroll past new content
-    var previousBottomEdge = firstTime ? 0 : contentBottomEdgeY();
+    //var previousBottomEdge = firstTime ? 0 : contentBottomEdgeY();
 
     // Generate story text - loop through available content
     if (story.canContinue
-        && story.text != currentlyShowingText) {
+        && story.currentText != currentlyShowingText) {
 
+        if (storyContainer.children.length > 1) {
+            storyContainer.removeChildren(1, storyContainer.children.length - 1)
+        }
+        
+        let continueButton = new PIXI.Container()
+        // let normal = new PIXI.Sprite(app.loader.resources.ButtonNormal.texture)
+        // normal.texture.orig = new PIXI.Rectangle(15, 15, 15, 15)
+        let buttonNormal = new PIXI.NineSlicePlane(app.loader.resources.ButtonNormal.texture, 7, 7, 7, 7);
+        //let buttonActive = new PIXI.NineSlicePlane(PIXI.Sprite(app.loader.resources.ButtonActive.texture), 7, 7, 7, 7);
+        //let buttonSelected = new PIXI.NineSlicePlane(PIXI.Sprite(app.loader.resources.ButtonSelected.texture), 7, 7, 7, 7);
+        
+        continueButton.x = padding
+        continueButton.y = storyContainer.height - buttonHeight - padding
+        
+        buttonNormal.x = 0
+        buttonNormal.y = 0
+        buttonNormal.width = (storyContainer.width - padding * 2)
+        buttonNormal.height = buttonHeight
+        continueButton.addChild(buttonNormal)
+
+        continueButton.interactive = true
+        continueButton.on('tap', (event) => {
+            onContinue()
+        });
+        continueButton.on('click', (event) => {
+            onContinue()
+        });
+        
         // Get ink to generate the next paragraph
         currentlyShowingText = story.Continue();
         // var tags = story.currentTags;
@@ -40,7 +81,8 @@ const continueStory = (firstTime) => {
         basicText.x = 8;
         basicText.y = 8;
 
-        storyContainer.addChild(basicText);
+        storyContainer.addChild(basicText)
+        storyContainer.addChild(continueButton);
 
         // // Any special tags included with this line
         // var customClasses = [];
