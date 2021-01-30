@@ -17,20 +17,45 @@ app.loader
   .add('princeStand', 'assets/princeStand.png')
   .add('princeWalk1', 'assets/princeWalk1.png')
   .add('princeWalk2', 'assets/princeWalk2.png')
+  .add('tree', 'assets/tree.png')
   .add('DialogBackground', 'assets/DialogBackground.png')
   .add('ButtonNormal', 'assets/ButtonNormal.png')
   .add('ButtonActive', 'assets/ButtonActive.png')
   .add('ButtonSelected', 'assets/ButtonSelected.png')
   .load((loader, resources) => {
+
     // Planet
     const planet = new PIXI.Sprite(resources.planet.texture)
     planet.width = 1000
     planet.height = 1000
-    planet.x = app.renderer.width / 2
-    planet.y = app.renderer.height + 300
-    planet.anchor.x = 0.5
-    planet.anchor.y = 0.5
-    app.stage.addChild(planet)
+    planet.anchor.set(0.5)
+
+    // Tree
+    const tree = new PIXI.Sprite(resources.tree.texture)
+    tree.width = 200
+    tree.height = 300
+    tree.anchor.set(0.5)
+    tree.rotation = Math.PI
+    tree.x = 0
+    tree.y = 600
+
+    const tree2 = new PIXI.Sprite(resources.tree.texture)
+    tree2.width = 200
+    tree2.height = 300
+    tree2.anchor.set(0.5)
+    tree2.x = 600
+    tree2.y = 0
+    tree2.rotation = Math.PI / 2
+
+    // Planet Container
+    const planetContainer = new PIXI.Container()
+
+    planetContainer.position.x = app.renderer.width / 2
+    planetContainer.position.y = app.renderer.height + 300
+    planetContainer.addChild(planet)
+    planetContainer.addChild(tree)
+    planetContainer.addChild(tree2)
+    app.stage.addChild(planetContainer)
 
     // Prince
     const prince = new PIXI.AnimatedSprite([resources.princeStand.texture])
@@ -44,7 +69,7 @@ app.loader
     app.stage.addChild(prince)
 
     let thunk = () => {
-      planet.rotation = 0
+      planetContainer.rotation = 0
       prince.textures = [resources.princeStand.texture]
       prince.scale.x = 1
     }
@@ -77,7 +102,7 @@ app.loader
       switch (event.key) {
         case "a":
           thunk = () => {
-            planet.rotation += 0.05
+            planetContainer.rotation += 0.05
             prince.scale.x = -1
             if (!prince.playing) {
               prince.textures =
@@ -89,7 +114,7 @@ app.loader
           break
         case "d":
           thunk = () => {
-            planet.rotation += -0.05
+            planetContainer.rotation += -0.05
             prince.scale.x = 1
             if (!prince.playing) {
               prince.textures =
