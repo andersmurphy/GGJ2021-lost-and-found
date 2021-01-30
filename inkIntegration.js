@@ -1,3 +1,33 @@
+let didMeetSnake = false
+
+const interactionListener = _ => {
+    if (!didMeetSnake) { // Faking it: When the prince interacts with another character a dialog appears
+        didMeetSnake = true
+        showSnakeDialog()
+    }
+}
+
+const showSnakeDialog = () => {
+    // add dialog box beside prince
+    let container = new PIXI.Container();
+    let background = new PIXI.Sprite(app.loader.resources.DialogBackground.texture)
+
+    container.width = 584
+    container.height = 348
+    container.x = 8
+    container.y = 8
+
+    container.addChild(background);
+
+    app.stage.addChild(container)
+    // run ink script 
+    loadStory(helloWorldStoryContent, container)
+
+    app.ticker.add(
+        () => {
+            continueStory(false)
+        })
+}
 
 // will need to load different stories
 // will need to update every tick

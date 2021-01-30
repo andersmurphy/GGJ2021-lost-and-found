@@ -9,7 +9,6 @@ const app = new PIXI.Application(
     height: 720,
     antialias: true,
   })
-let didMeetSnake = false
 
 // The application will create a canvas element for you that you
 // can then insert into the DOM
@@ -84,35 +83,5 @@ app.loader
 
   document.addEventListener("keydown", downListener, false)
   document.addEventListener("keyup", upListener, false)
-
-  const showSnakeDialog = () => {
-    // add dialog box beside prince
-    let container = new PIXI.Container();
-    let background = new PIXI.Sprite(app.loader.resources.DialogBackground.texture)
-
-    container.width = 584
-    container.height = 348
-    container.x = 8
-    container.y = 8
-
-    container.addChild(background);
-
-    app.stage.addChild(container)
-    // run ink script 
-    loadStory(helloWorldStoryContent, container)
-
-    app.ticker.add(
-      () => {
-        continueStory(false)
-      })
-  }
-
-  const interactionListener = _ => {
-    if (!didMeetSnake) { // Faking it: When the prince interacts with another character a dialog appears
-      didMeetSnake = true
-      showSnakeDialog()
-    }
-  }
-
   app.ticker.add(interactionListener)
 })
