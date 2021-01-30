@@ -17,8 +17,8 @@ app.loader
   // This creates a texture from a 'planet.png' image
   //dialogBackground = new PIXI.Sprite(resources.DialogBackground.texture)
   const planet = new PIXI.Sprite(resources.planet.texture)
-  planet.width = 200
-  planet.height = 200
+  planet.width = 300
+  planet.height = 300
 
   // Setup the position of the planet
   planet.x = app.renderer.width / 2
@@ -31,20 +31,42 @@ app.loader
   // Add the planet to the scene we are building
   app.stage.addChild(planet)
 
-  // Listen for frame updates
-  app.ticker.add(() => {
-    // each frame we spin the planet around a bit
-    planet.rotation += 0.01
-  })
-  app.ticker.add(() => {
-      if (!didMeetSnake) {
-          didMeetSnake = true
-          showSnakeDialog()
-      }
-  })
-})
+  let state = { planetRotation: 0.00 }
 
-function showSnakeDialog() {
+  const gameLoop = _ => {
+    planet.rotation += state.planetRotation
+  }
+
+  app.ticker.add(delta => gameLoop(delta))
+
+  const upListener = event => {
+    switch (event.key) {
+      case "a":
+        state.planetRotation = 0
+        break;
+      case "d":
+        state.planetRotation = 0
+        break;
+      default:
+    }
+  }
+
+  const downListener = event => {
+    switch (event.key) {
+      case "a":
+        state.planetRotation = 0.05
+        break;
+      case "d":
+        state.planetRotation = -0.05
+        break;
+      default:
+    }
+  }
+
+  document.addEventListener("keydown", downListener, false)
+  document.addEventListener("keyup", upListener, false)
+
+  const showSnakeDialog = () => {
     // add dialog box beside prince
     let background = new PIXI.Sprite(app.loader.resources.DialogBackground.texture)
 
@@ -55,5 +77,14 @@ function showSnakeDialog() {
 
     app.stage.addChild(background)
     // run ink script 
-}
-// Desired: When the prince collides with another character a dialog appears
+  }
+
+  const interactionListener = _ => {
+    if (!didMeetSnake) { // Faking it: When the prince collides with another character a dialog appears
+        didMeetSnake = true
+        showSnakeDialog()
+    }
+  }
+
+  app.ticker.add(interactionListener)
+})
