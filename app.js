@@ -1,14 +1,19 @@
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
 // and the root stage PIXI.Container
-const app = new PIXI.Application()
+const app = new PIXI.Application(
+  { width: 1280,
+    height: 720,
+  })
 
 // The application will create a canvas element for you that you
 // can then insert into the DOM
 document.body.appendChild(app.view)
 
 // load the texture we need
-app.loader.add('planet', 'planet.png').load((loader, resources) => {
+app.loader
+  .add('planet', 'planet.png')
+  .load((loader, resources) => {
   // This creates a texture from a 'planet.png' image
   const planet = new PIXI.Sprite(resources.planet.texture)
   planet.width = 1000
