@@ -14,9 +14,9 @@ document.body.appendChild(app.view)
 
 app.loader
   .add('planet', 'assets/planet.png')
-  .add('princeStand', 'assets/princeStand.png')
-  .add('princeWalk1', 'assets/princeWalk1.png')
-  .add('princeWalk2', 'assets/princeWalk2.png')
+  .add('princeStand', 'assets/Prince_Idle_160.png')
+  .add('princeWalk1', 'assets/Prince_Idle_160.png')
+  .add('princeWalk2', 'assets/Prince_Idle_160.png')
   .add('tree', 'assets/tree.png')
   .add('DialogBackground', 'assets/DialogBackground.png')
   .add('ButtonNormal', 'assets/ButtonNormal.png')
@@ -59,8 +59,8 @@ app.loader
 
     // Prince
     const prince = new PIXI.AnimatedSprite([resources.princeStand.texture])
-    prince.width = 100
-    prince.height = 100
+    prince.width = resources.princeStand.texture.width
+    prince.height = resources.princeStand.texture.height
     prince.x = app.renderer.width / 2
     prince.y = app.renderer.height - 230
     prince.anchor.x = 0.5
