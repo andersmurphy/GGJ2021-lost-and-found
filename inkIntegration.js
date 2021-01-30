@@ -239,7 +239,6 @@ const makeButton = (text, width, height) => {
     let buttonActive = new PIXI.NineSlicePlane(app.loader.resources.ButtonActive.texture, 7, 7, 7, 7);
     let buttonSelected = new PIXI.NineSlicePlane(app.loader.resources.ButtonSelected.texture, 7, 7, 7, 7);
     let font = new PIXI.TextStyle({fontFamily : 'Arial', fontSize: 24, fill : 0xEFEFEF, align : 'center'})
-    console.log(text)
     const label = new PIXI.HTMLText(text, font)
 
     label.x = (width / 2) - (label.width / 2)
