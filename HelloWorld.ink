@@ -1,5 +1,5 @@
 LONDON, 1872
-Residence of Monsieur Phileas Fogg.
+Residence of Monsieur Phileas Fogg. Lots more detail on the accoutrements collected over years of travel. The average selection of golf clubs for monsieur's age and standing in high society. Other such nonsense as is required to fill the vaccum of dialog space. Are we there yet?
 -> london
 
 === london ===

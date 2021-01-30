@@ -51,50 +51,41 @@ const loadStory = (storyContent, container) => {
 }
 
 const onContinue = () => {
-    currentlyShowingText = null
+    if (excessLines.length > 0) {
+        console.log("Showing excess text from last continue")
+        var lines = [...excessLines]
+        excessLines = []
+        setContent(lines)
+    } else {
+        console.log("Continuing...")
+        currentlyShowingText = null
+    }
 }
 
 const buttonHeight = 44
 const padding = 8
+const maxLines = 4
+var continueButton = null
 
 const continueStory = (firstTime) => {
-
-    if (excessLines.length > 0) {
-
-    } else {
+    if (excessLines.length === 0) {
         showNextPieceOfStory(firstTime)
     }
 }
 
 const showNextPieceOfStory = (firstTime) => {
+
     if (story.canContinue
         && story.currentText != currentlyShowingText) {
-
-        clearDialog()
-        
+            console.log("Show next")
         var contentWidth = storyContainer.width - padding * 2
-        let continueButton = makeButton("Continue", contentWidth, buttonHeight)
-        continueButton.x = padding
-        continueButton.y = storyContainer.height - buttonHeight - padding
-    
-        continueButton.on('mouseup', (event) => {
-            onContinue()
-        });
 
         // Get ink to generate the next paragraph
         currentlyShowingText = story.Continue();
         
         let style = new PIXI.TextStyle({fontFamily : 'Arial', fontSize: 24, fill : 0x101010, align : 'left'})
         var lines = LayedOutText(currentlyShowingText, style, contentWidth, "left")
-        var lineY = padding;
-
-        lines.forEach(line => {
-            line.y = lineY
-            storyContainer.addChild(line);
-            lineY += line.height
-            lineY += padding
-        });
-        storyContainer.addChild(continueButton);
+        setContent(lines)
 
         {
         // var tags = story.currentTags;
@@ -193,6 +184,35 @@ const showNextPieceOfStory = (firstTime) => {
     // if( !firstTime )
     //     scrollDown(previousBottomEdge);
     }
+}
+
+const setContent = (lines) => {
+    if (lines.length > maxLines) {
+        var excess = lines.slice(maxLines, (maxLines) + (lines.length - maxLines))
+        excessLines = excessLines.concat(excess)
+        lines = lines.slice(0, maxLines)
+    }
+    clearDialog()
+        
+    var contentWidth = storyContainer.width - padding * 2
+    
+    continueButton = makeButton("Continue", contentWidth, buttonHeight)
+    continueButton.x = padding
+    continueButton.y = storyContainer.height - buttonHeight - padding
+
+    continueButton.on('mouseup', (event) => {
+        onContinue()
+    });
+
+    var lineY = padding;
+
+    lines.forEach(line => {
+        line.y = lineY
+        storyContainer.addChild(line);
+        lineY += line.height
+        lineY += padding
+    });
+    storyContainer.addChild(continueButton);
 }
 
 const makeButton = (text, width, height) => {
