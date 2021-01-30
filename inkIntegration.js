@@ -41,11 +41,19 @@ var story = new inkjs.Story(emptyStory);
 var currentlyShowingText = null
 var storyContainer = new PIXI.Container()
 var excessLines = []
+var presentedChoices = []
+
+const buttonHeight = 44
+const padding = 8
+const maxLines = 4
+var continueButton = null
+var contentWidth = 0
 
 const loadStory = (storyContent, container) => {
     story = new inkjs.Story(storyContent);
     excessLines = []
     storyContainer = container
+    contentWidth = storyContainer.width - padding * 2
     clearDialog()
     continueStory(true);
 }
@@ -60,10 +68,6 @@ const onContinue = () => {
     }
 }
 
-const buttonHeight = 44
-const padding = 8
-const maxLines = 4
-var continueButton = null
 
 const continueStory = (firstTime) => {
     if (excessLines.length === 0) {
@@ -75,7 +79,6 @@ const showNextPieceOfStory = (firstTime) => {
 
     if (story.canContinue
         && story.currentText != currentlyShowingText) {
-        var contentWidth = storyContainer.width - padding * 2
 
         // Get ink to generate the next paragraph
         currentlyShowingText = story.Continue();
@@ -140,39 +143,11 @@ const showNextPieceOfStory = (firstTime) => {
         // delay += 200.0;
         }
     }
-
+    else if (!story.canContinue
+             && story.currentChoices.length > 0)
     {
-    // // Create HTML choices from ink choices
-    // story.currentChoices.forEach(function(choice) {
-
-    //     // Create paragraph with anchor element
-    //     var choiceParagraphElement = document.createElement('p');
-    //     choiceParagraphElement.classList.add("choice");
-    //     choiceParagraphElement.innerHTML = `<a href='#'>${choice.text}</a>`
-    //     storyContainer.appendChild(choiceParagraphElement);
-
-    //     // Fade choice in after a short delay
-    //     showAfter(delay, choiceParagraphElement);
-    //     delay += 200.0;
-
-    //     // Click on choice
-    //     var choiceAnchorEl = choiceParagraphElement.querySelectorAll("a")[0];
-    //     choiceAnchorEl.addEventListener("click", function(event) {
-
-    //         // Don't follow <a> link
-    //         event.preventDefault();
-
-    //         // Remove all existing choices
-    //         removeAll("p.choice");
-
-    //         // Tell the story where to go next
-    //         story.ChooseChoiceIndex(choice.index);
-
-    //         // Aaand loop
-    //         continueStory();
-    //     });
-    // });
-
+        showChoices()
+    }
     // // Extend height to fit
     // // We do this manually so that removing elements and creating new ones doesn't
     // // cause the height (and therefore scroll) to jump backwards temporarily.
@@ -180,7 +155,57 @@ const showNextPieceOfStory = (firstTime) => {
 
     // if( !firstTime )
     //     scrollDown(previousBottomEdge);
+    
+}
+
+const showChoices = () => {
+    // Create HTML choices from ink choices
+    const maxChoices = 3
+    var choiceCount = story.currentChoices.length
+    var buttonY = storyContainer.height - (padding + buttonHeight) * choiceCount;
+
+    story.currentChoices.forEach(function(choice) {
+            
+        presentedChoices.push(choice.text)
+
+        var choiceButton = makeButton(choice.text, contentWidth, buttonHeight)
+
+        choiceButton.x = padding
+        choiceButton.y = buttonY
+
+        choiceButton.on('mouseup', (event) => {
+             // Remove all existing choices
+             clearDialog()
+
+             // Tell the story where to go next
+             story.ChooseChoiceIndex(choice.index);
+ 
+             presentedChoices = []
+             currentlyShowingText = null
+        });
+
+        storyContainer.addChild(choiceButton)
+
+        buttonY += padding + buttonHeight
+    });
+}
+
+const areNewChoices = () => {
+    return story.currentChoices.length > 0
+        && (presentedChoices.length = 0
+            || presentedChoices.length != story.currentChoices.length
+            || !arraysEqual(presentedChoices, story.currentChoices.map(choice => choice.text)))
+}
+
+function arraysEqual(a, b) {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length !== b.length) return false;
+
+    for (var i = 0; i < a.length; ++i) {
+        if (a[i] !== b[i]) return false;
     }
+    return true;
 }
 
 const setContent = (lines) => {
@@ -191,8 +216,6 @@ const setContent = (lines) => {
     }
     clearDialog()
         
-    var contentWidth = storyContainer.width - padding * 2
-    
     continueButton = makeButton("Continue", contentWidth, buttonHeight)
     continueButton.x = padding
     continueButton.y = storyContainer.height - buttonHeight - padding
@@ -347,7 +370,7 @@ const updateStory = (_) => {
 }
 function clearDialog() {
     if (storyContainer.children.length > 1) {
-        storyContainer.removeChildren(1, storyContainer.children.length - 1)
+        storyContainer.removeChildren(1, storyContainer.children.length)
     }
 }
 
