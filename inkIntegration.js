@@ -52,12 +52,10 @@ const loadStory = (storyContent, container) => {
 
 const onContinue = () => {
     if (excessLines.length > 0) {
-        console.log("Showing excess text from last continue")
         var lines = [...excessLines]
         excessLines = []
         setContent(lines)
     } else {
-        console.log("Continuing...")
         currentlyShowingText = null
     }
 }
@@ -77,7 +75,6 @@ const showNextPieceOfStory = (firstTime) => {
 
     if (story.canContinue
         && story.currentText != currentlyShowingText) {
-            console.log("Show next")
         var contentWidth = storyContainer.width - padding * 2
 
         // Get ink to generate the next paragraph
