@@ -21,7 +21,7 @@ const showSnakeDialog = () => {
 
     app.stage.addChild(container)
     // run ink script 
-    loadStory(helloWorldStoryContent, container)
+    loadStory(princeSnakeStoryContent, container)
 
     app.ticker.add(
         () => {
