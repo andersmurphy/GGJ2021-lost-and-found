@@ -72,41 +72,11 @@ const showNextPieceOfStory = (firstTime) => {
 
         clearDialog()
         
-        let continueButton = new PIXI.Container()
-        let buttonNormal = new PIXI.NineSlicePlane(app.loader.resources.ButtonNormal.texture, 7, 7, 7, 7);
-        let buttonActive = new PIXI.NineSlicePlane(app.loader.resources.ButtonActive.texture, 7, 7, 7, 7);
-        let buttonSelected = new PIXI.NineSlicePlane(app.loader.resources.ButtonSelected.texture, 7, 7, 7, 7);
         var contentWidth = storyContainer.width - padding * 2
-        
+        let continueButton = makeButton("Continue", contentWidth, buttonHeight)
         continueButton.x = padding
         continueButton.y = storyContainer.height - buttonHeight - padding
-        
-        buttonNormal.x = 0
-        buttonNormal.y = 0
-        buttonNormal.width = contentWidth
-        buttonNormal.height = buttonHeight
-
-        buttonActive.width = contentWidth
-        buttonActive.height = buttonHeight
-
-        buttonSelected.width = contentWidth
-        buttonSelected.height = buttonHeight
-
-        continueButton.addChild(buttonNormal)
-
-        continueButton.interactive = true
-        continueButton.on('mouseover', (event) => {
-            continueButton.removeChildren()
-            continueButton.addChild(buttonActive)
-        });
-        continueButton.on('mouseout', (event) => {
-            continueButton.removeChildren()
-            continueButton.addChild(buttonNormal)
-        });
-        continueButton.on('mousedown', (event) => {
-            continueButton.removeChildren()
-            continueButton.addChild(buttonSelected)
-        });
+    
         continueButton.on('mouseup', (event) => {
             onContinue()
         });
@@ -126,6 +96,7 @@ const showNextPieceOfStory = (firstTime) => {
         });
         storyContainer.addChild(continueButton);
 
+        {
         // var tags = story.currentTags;
         // // Any special tags included with this line
         // var customClasses = [];
@@ -179,9 +150,10 @@ const showNextPieceOfStory = (firstTime) => {
         // // Fade in paragraph after a short delay
         // showAfter(delay, paragraphElement);
         // delay += 200.0;
-
+        }
     }
 
+    {
     // // Create HTML choices from ink choices
     // story.currentChoices.forEach(function(choice) {
 
@@ -220,6 +192,50 @@ const showNextPieceOfStory = (firstTime) => {
 
     // if( !firstTime )
     //     scrollDown(previousBottomEdge);
+    }
+}
+
+const makeButton = (text, width, height) => {
+    let button = new PIXI.Container()
+    let buttonNormal = new PIXI.NineSlicePlane(app.loader.resources.ButtonNormal.texture, 7, 7, 7, 7);
+    let buttonActive = new PIXI.NineSlicePlane(app.loader.resources.ButtonActive.texture, 7, 7, 7, 7);
+    let buttonSelected = new PIXI.NineSlicePlane(app.loader.resources.ButtonSelected.texture, 7, 7, 7, 7);
+    let font = new PIXI.TextStyle({fontFamily : 'Arial', fontSize: 24, fill : 0xEFEFEF, align : 'center'})
+    const label = new PIXI.Text(text, font)
+
+    label.x = (width / 2) - (label.width / 2)
+    label.y = (height / 2) - (label.height / 2)
+
+    buttonNormal.width = width
+    buttonNormal.height = height
+
+    buttonActive.width = width
+    buttonActive.height = height
+
+    buttonSelected.width = width
+    buttonSelected.height = height
+
+    button.addChild(buttonNormal)
+    button.addChild(label)
+
+    button.interactive = true
+    button.on('mouseover', (event) => {
+        button.removeChildren()
+        button.addChild(buttonActive)
+        button.addChild(label)
+    });
+    button.on('mouseout', (event) => {
+        button.removeChildren()
+        button.addChild(buttonNormal)
+        button.addChild(label)
+    });
+    button.on('mousedown', (event) => {
+        button.removeChildren()
+        button.addChild(buttonSelected)
+        button.addChild(label)
+    });
+
+    return button
 }
 
 const LayedOutText = (text, font, width, alignment) => {
