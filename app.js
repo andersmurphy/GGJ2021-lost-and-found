@@ -1,5 +1,3 @@
-//import { Container } from '@pixi/display';
-
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
 // and the root stage PIXI.Container
@@ -15,11 +13,11 @@ const app = new PIXI.Application(
 document.body.appendChild(app.view)
 
 app.loader
-    .add('planet', 'planet.png')
-    .add('DialogBackground', 'DialogBackground.png')
-    .add('ButtonNormal', 'ButtonNormal.png')
-    .add('ButtonActive', 'ButtonActive.png')
-    .add('ButtonSelected', 'ButtonSelected.png')
+    .add('planet', 'assets/planet.png')
+    .add('DialogBackground', 'assets/DialogBackground.png')
+    .add('ButtonNormal', 'assets/ButtonNormal.png')
+    .add('ButtonActive', 'assets/ButtonActive.png')
+    .add('ButtonSelected', 'assets/ButtonSelected.png')
     .load((loader, resources) => {
   // Planet
   const planet = new PIXI.Sprite(resources.planet.texture)
