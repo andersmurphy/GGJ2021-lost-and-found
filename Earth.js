@@ -1,6 +1,6 @@
 const showEarth = (resources, planetContainer) => {
     // Planet
-    const planet = new PIXI.Sprite(resources.planet.texture)
+    const planet = new PIXI.Sprite(resources.planet_earth.texture)
     planet.width = 1000
     planet.height = 1000
     planet.anchor.set(0.5)
@@ -12,7 +12,7 @@ const showEarth = (resources, planetContainer) => {
     snake.anchor.set(0.5)
     snake.rotation = Math.PI
     snake.x = 0
-    snake.y = 542
+    snake.y = 392
     snake.animationSpeed = 0.1
 
     planetContainer.addChild(planet)

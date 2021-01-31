@@ -108,7 +108,7 @@ app.loader
   .add('princeStand', 'assets/Prince_Idle_190.png')
   .add('princeWalk1', 'assets/Prince_Walk_1.png')
   .add('princeWalk2', 'assets/Prince_Walk_2.png')
-.add('princeDead', 'assets/Prince_Dead.png')
+  .add('princeDead', 'assets/Prince_Dead.png')
   .add('tree', 'assets/tree.png')
   .add('snake', 'assets/snek_idle.png')
   .add('snakeBite', 'assets/snek_bite.png')
@@ -125,6 +125,8 @@ app.loader
   .add('birds_prince_1', 'assets/birds_prince_1.png')
   .add('birds_prince_2', 'assets/birds_prince_2.png')
   .add('rose_globe', 'assets/rose_globe.png')
+  .add('planet_earth', 'assets/planet_earth.png')
+  .add('planet_B612', 'assets/planet_B612.png')
   .load((loader, resources) => {
 
     startStarfield()
@@ -134,7 +136,7 @@ app.loader
     const planetContainer = new PIXI.Container()
 
     planetContainer.position.x = app.renderer.width / 2
-    planetContainer.position.y = app.renderer.height + 300
+    planetContainer.position.y = app.renderer.height + 170
     app.stage.addChild(planetContainer)
 
     // Prince
@@ -148,8 +150,11 @@ app.loader
     prince.animationSpeed = 0.1
     app.stage.addChild(prince)
 
-    var actor = showB612(resources, planetContainer)
+    // var actor = showB612(resources, planetContainer)
 
-    setupControls(resources, planetContainer, prince, actor, princeRoseStoryContent, (rose, prince) => doTravelToEarth(rose, prince, planetContainer, setStarSpeedFunction))
+    // setupControls(resources, planetContainer, prince, actor, princeRoseStoryContent, (rose, prince) => doTravelToEarth(rose, prince, planetContainer, setStarSpeedFunction))
+    var actor = showEarth(resources, planetContainer)
+
+    setupControls(resources, planetContainer, prince, actor, princeSnakeStoryContent, (rose, prince) => doTravelToB612(rose, prince))
 
   })

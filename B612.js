@@ -1,6 +1,6 @@
 const showB612 = (resources, planetContainer) => {
     // Planet
-    const planet = new PIXI.Sprite(resources.planet.texture)
+    const planet = new PIXI.Sprite(resources.planet_B612.texture)
     planet.width = 1000
     planet.height = 1000
     planet.anchor.set(0.5)
@@ -12,7 +12,7 @@ const showB612 = (resources, planetContainer) => {
     rose.anchor.set(0.5)
     rose.rotation = Math.PI
     rose.x = 0
-    rose.y = 542
+    rose.y = 392
     rose.animationSpeed = 0.1
 
     planetContainer.addChild(planet)
