@@ -114,6 +114,11 @@ app.loader
   .add('star2', 'assets/star2.png')
   .add('star3', 'assets/star3.png')
   .add('star4', 'assets/star4.png')
+  .add('birds_only_1', 'assets/birds_only_1.png')
+  .add('birds_only_2', 'assets/birds_only_2.png')
+  .add('birds_prince_1', 'assets/birds_prince_1.png')
+  .add('birds_prince_2', 'assets/birds_prince_2.png')
+  .add('rose_globe', 'assets/rose_globe.png')
   .load((loader, resources) => {
 
     startStarfield()
