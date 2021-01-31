@@ -10,15 +10,19 @@ Install http-server:
 
 `npm install -g live-server`
 
-Start server in project root:
+Mac: Start server in project root:
 
 `live-server`
 
-Got to:
+Windows: Start server in project root:
 
+`http-server -c-1`
+
+Go to:
+ 
 http://localhost:8080
 
-Server will automatically reload browser on changes.
+Mac: Server will automatically reload browser on changes.
 
 ## Deploy
 
