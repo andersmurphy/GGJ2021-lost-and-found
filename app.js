@@ -12,7 +12,7 @@ const app = new PIXI.Application(
 // can then insert into the DOM
 document.body.appendChild(app.view)
 
-const setupControls = (resources, planetContainer, prince, actor, storyContent) => {
+const setupControls = (resources, planetContainer, prince, actor, storyContent, onLeavePlanet) => {
 
   let thunk = () => {
       planetContainer.rotation = 0
@@ -24,7 +24,7 @@ const setupControls = (resources, planetContainer, prince, actor, storyContent) 
 
   let actorContacted = false
   let disableMovement = false
-  const onContinueLiving = () => {
+  const onContinueOnPlanet = () => {
       disableMovement = false
   }
 
@@ -32,7 +32,7 @@ const setupControls = (resources, planetContainer, prince, actor, storyContent) 
       () => {
       let r = rotationTo2PI(planetContainer.rotation)
       if (r > 2.9 && 3 > r && !actorContacted) {
-          showDialog(storyContent, actor, prince, onContinueLiving)
+          showDialog(storyContent, actor, prince, onContinueOnPlanet, onLeavePlanet)
           actorContacted = true
           disableMovement = true
           actor.scale.x = prince.scale.x
@@ -98,6 +98,11 @@ const setupControls = (resources, planetContainer, prince, actor, storyContent) 
   document.addEventListener("keyup", upListener, false)
 }
 
+const setStarSpeedFunction = (speedX, speedY) => {
+  starSpeedX = speedX
+  starSpeedY = speedY
+}
+
 app.loader
   .add('planet', 'assets/planet.png')
   .add('princeStand', 'assets/Prince_Idle_190.png')
@@ -144,6 +149,6 @@ app.loader
 
     var actor = showB612(resources, planetContainer)
 
-    setupControls(resources, planetContainer, prince, actor, princeRoseStoryContent)
+    setupControls(resources, planetContainer, prince, actor, princeRoseStoryContent, (rose, prince) => doTravelToEarth(rose, prince, planetContainer, setStarSpeedFunction))
 
   })
