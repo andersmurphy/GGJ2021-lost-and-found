@@ -1,4 +1,7 @@
+var travellingPrince = null
+
 const doTravelToB612 = (snake, prince) => {
+    travellingPrince = prince
     doSnakeBite(snake)
     snake.onComplete = function () {
         doPrinceCollapsing(prince)
@@ -18,10 +21,19 @@ const doSnakeBite = (snake) => {
     snake.play()
 }
 
+const rotatePrinceToHorizontal = (delta) => {
+    travellingPrince.rotation += 0.05
+    if (travellingPrince.rotation >= 1.6) {
+        app.ticker.remove(rotatePrinceToHorizontal)
+    }
+}
+
 // prince falls over, 
 const doPrinceCollapsing = (prince) => {
     //prince.
+    app.ticker.add(rotatePrinceToHorizontal)
 }
+
 // prince is replaced with dead-prince, 
 // birds descend from above, 
 // ghost-prince rises from body, 
