@@ -58,6 +58,16 @@ const onContinue = () => {
         excessLines = []
         setContent(lines)
     } else {
+        if (!story.canContinue
+            && story.currentChoices.length == 0) {
+            console.log("END")
+            if (story.variablesState["choseDeath"] == true) {
+                console.log("Chose death")
+            } else {
+                console.log("No death")
+            }
+            storyContainer.parent.removeChild(storyContainer)
+        }
         currentlyShowingText = null
     }
 }
