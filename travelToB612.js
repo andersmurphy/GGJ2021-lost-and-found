@@ -1,5 +1,6 @@
 let travellingPrince = null
 let travellingGhost  = null
+let fin = null
 
 const doTravelToB612 = (snake, prince, ghost) => {
   travellingPrince = prince
@@ -41,6 +42,7 @@ const rotatePrinceToHorizontal = (delta) => {
 
 const flyGhostAway = (delta) => {
   if (travellingGhost.visible === true) travellingGhost.y -= 1
+  if (travellingGhost.y < -200) fin.visible = true
 }
 
 // prince falls over,

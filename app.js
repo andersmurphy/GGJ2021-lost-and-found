@@ -128,6 +128,7 @@ app.loader
   .add('princeWalk2', 'assets/Prince_Walk_2.png')
   .add('princeDead', 'assets/Prince_Dead.png')
   .add('princeFlying', 'assets/Prince_Flying.png')
+  .add('fin', 'assets/fin.png')
   .add('snake', 'assets/snek_idle.png')
   .add('snakeBite', 'assets/snek_bite.png')
   .add('DialogBackground', 'assets/DialogBackground.png')
