@@ -89,6 +89,7 @@ app.loader
           showDialog(princeSnakeStoryContent, snake, prince, onContinueLiving)
           snakeContacted = true
           disableMovement = true
+          snake.scale.x = prince.scale.x
         }
         thunk()
       })
