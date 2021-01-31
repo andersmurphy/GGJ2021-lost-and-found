@@ -147,9 +147,9 @@ app.loader
 
     document.addEventListener("keydown", downListener, false)
     document.addEventListener("keyup", upListener, false)
-    app.ticker.add(interactionListener)
     app.ticker.add(starfieldTwinkles)
 
     // starSpeedX = 0.5
     // starSpeedY = 0.5
+    showDialog(princeSnakeStoryContent)
   })

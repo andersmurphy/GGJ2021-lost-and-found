@@ -1,13 +1,5 @@
-let didMeetSnake = false
 
-const interactionListener = _ => {
-    if (!didMeetSnake) { // Faking it: When the prince interacts with another character a dialog appears
-        didMeetSnake = true
-        showSnakeDialog()
-    }
-}
-
-const showSnakeDialog = () => {
+const showDialog = (inkStoryContent) => {
     // add dialog box beside prince
     let container = new PIXI.Container();
     let background = new PIXI.Sprite(app.loader.resources.DialogBackground.texture)
@@ -23,7 +15,7 @@ const showSnakeDialog = () => {
 
     app.stage.addChild(container)
     // run ink script 
-    loadStory(princeSnakeStoryContent, container)
+    loadStory(inkStoryContent, container)
 
     app.ticker.add(
         () => {
