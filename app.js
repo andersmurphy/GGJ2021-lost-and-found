@@ -18,6 +18,7 @@ app.loader
   .add('princeWalk1', 'assets/Prince_Walk_1.png')
   .add('princeWalk2', 'assets/Prince_Walk_2.png')
   .add('tree', 'assets/tree.png')
+  .add('snake', 'assets/snek_idle.png')
   .add('DialogBackground', 'assets/DialogBackground.png')
   .add('ButtonNormal', 'assets/ButtonNormal.png')
   .add('ButtonActive', 'assets/ButtonActive.png')
@@ -34,14 +35,14 @@ app.loader
     planet.height = 1000
     planet.anchor.set(0.5)
 
-    // Tree
-    const tree = new PIXI.Sprite(resources.tree.texture)
-    tree.width = 200
-    tree.height = 300
-    tree.anchor.set(0.5)
-    tree.rotation = Math.PI
-    tree.x = 0
-    tree.y = 600
+    // Snake
+    const snake = new PIXI.Sprite(resources.snake.texture)
+    snake.width = resources.snake.texture.width
+    snake.height = resources.snake.texture.height
+    snake.anchor.set(0.5)
+    snake.rotation = Math.PI
+    snake.x = 0
+    snake.y = 542
 
     const tree2 = new PIXI.Sprite(resources.tree.texture)
     tree2.width = 200
@@ -59,7 +60,7 @@ app.loader
     planetContainer.position.x = app.renderer.width / 2
     planetContainer.position.y = app.renderer.height + 300
     planetContainer.addChild(planet)
-    planetContainer.addChild(tree)
+    planetContainer.addChild(snake)
     planetContainer.addChild(tree2)
     app.stage.addChild(planetContainer)
 
@@ -149,6 +150,6 @@ app.loader
     app.ticker.add(interactionListener)
     app.ticker.add(starfieldTwinkles)
 
-    starSpeedX = 0.5
-    starSpeedY = 0.5
+    // starSpeedX = 0.5
+    // starSpeedY = 0.5
   })
