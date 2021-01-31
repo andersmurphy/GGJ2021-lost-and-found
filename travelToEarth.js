@@ -16,10 +16,7 @@ const doTravelToEarth = (rose, prince, planetContainer, setStarSpeedFunction) =>
     startBirds()
 }
 
-const startBirdSpeed = 2.1
-var birdSpeed = 2.1
-const birdAcceleration = 0.001
-
+const birdSpeed = 2.1
 
 const startBirds = () => {
     console.log("descendBirds")
@@ -36,7 +33,6 @@ const startBirds = () => {
     birds.play()
     app.stage.addChild(birds)
 
-    birdSpeed = startBirdSpeed
     app.ticker.add(descendBirds)
 }
 
@@ -44,7 +40,6 @@ const startBirds = () => {
 const descendBirds = (delta) => {
     birds.position.x -= delta * birdSpeed
     birds.position.y += delta * birdSpeed
-    //birdSpeed -= birdAcceleration
     //console.log("Y: " + birds.position.y)
     if (birds.position.x < app.renderer.width / 2) {
         birds.position.x = app.renderer.width / 2
@@ -74,31 +69,27 @@ var newSnake = null
 
 const ascendBirds = (delta) => {
     if (b612IsOnScreen) {
-        // birdSpeed += birdAcceleration
-        // if (birdSpeed >= startBirdSpeed) {
-        //     birdSpeed = startBirdSpeed
-        // }
-        // doSetStarSpeedFunction(birdSpeed, birdSpeed)
         thePlanetContainer.position.x += delta * birdSpeed
         thePlanetContainer.position.y += delta * birdSpeed
 
-        if (thePlanetContainer.position.y > app.renderer.height + thePlanetContainer.height) {
+        if (thePlanetContainer.position.y > app.renderer.height + 450) {
+            console.log("b612IsOff Screen")
             thePlanetContainer.visible = false
             b612IsOnScreen = false
         }
     }
     //console.log("timeSpentAscending: " + timeSpentAscending)
-    if (timeSpentAscending > 240 && !descendingToEarth) {
+    if (timeSpentAscending > 320 && !descendingToEarth) {
         doSetStarSpeedFunction(birdSpeed, -birdSpeed)
         descendingToEarth = true
         console.log("Descending")
-    } else if (descendingToEarth && timeSpentAscending > 340 && !earthIsOnScreen) {
+    } else if (descendingToEarth && timeSpentAscending > 380 && !earthIsOnScreen) {
+        console.log("earthIsOnScreen")
         thePlanetContainer.removeChildren()
         thePlanetContainer.rotation = 0
+        thePlanetContainer.visible = true
         newSnake = showEarth(app.loader.resources, thePlanetContainer)
 
-        thePlanetContainer.rotation = 0
-        thePlanetContainer.visible = true
         thePlanetContainer.position.x = (-thePlanetContainer.width / 2)
         thePlanetContainer.position.y = app.renderer.height + thePlanetContainer.height + 500
         earthIsOnScreen = true
@@ -107,13 +98,15 @@ const ascendBirds = (delta) => {
         thePlanetContainer.position.y -= delta * birdSpeed
 
         if (thePlanetContainer.position.y <= app.renderer.height + 170) {
-            thePlanetContainer.position.y = app.renderer.height + 170
+            console.log("haveArrivedOnEarth")
             thePlanetContainer.position.x = app.renderer.width / 2
+            thePlanetContainer.position.y = app.renderer.height + 170
             haveArrivedOnEarth = true
 
             birds.textures = [
                 app.loader.resources.birds_only_1.texture,
                 app.loader.resources.birds_only_2.texture]
+            birds.play()
             princeTravellingToEarth.position.x = app.renderer.width / 2
             princeTravellingToEarth.position.y = app.renderer.height - 274
             princeTravellingToEarth.visible = true
@@ -124,6 +117,7 @@ const ascendBirds = (delta) => {
             app.ticker.remove(ascendBirds)
         }
     }
+
     timeSpentAscending += delta
 }
 
