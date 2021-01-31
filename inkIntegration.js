@@ -1,8 +1,11 @@
 var theSnake = null
+var thePrince = null
+var doContinueLiving = null
 
-const showDialog = (inkStoryContent, snake) => {
+const showDialog = (inkStoryContent, snake, prince, onContinueLiving) => {
     theSnake = snake
-
+    thePrince = prince
+    doContinueLiving = onContinueLiving
     // add dialog box beside prince
     let container = new PIXI.Container();
     let background = new PIXI.Sprite(app.loader.resources.DialogBackground.texture)
@@ -66,9 +69,10 @@ const onContinue = () => {
             console.log("END")
             if (story.variablesState["choseDeath"] == true) {
                 console.log("Chose death")
-                doTravelToB612(theSnake)
+                doTravelToB612(theSnake, thePrince)
             } else {
                 console.log("No death")
+                doContinueLiving()
             }
             storyContainer.parent.removeChild(storyContainer)
         }

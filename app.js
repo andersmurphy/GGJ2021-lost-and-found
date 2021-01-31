@@ -12,6 +12,10 @@ const app = new PIXI.Application(
 // can then insert into the DOM
 document.body.appendChild(app.view)
 
+const onContinueLiving = () => {
+  console.log("onContinueLiving")
+}
+
 app.loader
   .add('planet', 'assets/planet.png')
   .add('princeStand', 'assets/Prince_Idle_190.png')
@@ -153,5 +157,5 @@ app.loader
 
     // starSpeedX = 0.5
     // starSpeedY = 0.5
-    showDialog(princeSnakeStoryContent, snake)
+    showDialog(princeSnakeStoryContent, snake, prince, onContinueLiving)
   })

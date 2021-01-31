@@ -1,9 +1,11 @@
-const doTravelToB612 = (snake) => {
+const doTravelToB612 = (snake, prince) => {
     doSnakeBite(snake)
+    snake.onComplete = function () {
+        doPrinceCollapsing(prince)
+    }
 }
 
 // snake does bite animation
-
 const doSnakeBite = (snake) => {
     snake.textures = [
         app.loader.resources.snake.texture,
@@ -15,4 +17,13 @@ const doSnakeBite = (snake) => {
     snake.loop = false
     snake.play()
 }
-// birds descend from above
+
+// prince falls over, 
+const doPrinceCollapsing = (prince) => {
+    
+}
+// prince is replaced with dead-prince, 
+// birds descend from above, 
+// ghost-prince rises from body, 
+// connects to birds, flies to B612
+
