@@ -20,7 +20,7 @@ const doSnakeBite = (snake) => {
 
 // prince falls over, 
 const doPrinceCollapsing = (prince) => {
-    
+    //prince.
 }
 // prince is replaced with dead-prince, 
 // birds descend from above, 

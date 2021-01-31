@@ -87,7 +87,7 @@ app.loader
       () => {
         let r = rotationTo2PI(planetContainer.rotation)
         if (r > 3 && 3.4 > r && !snakeContacted) {
-          showDialog(princeSnakeStoryContent)
+          showDialog(princeSnakeStoryContent, snake, prince, onContinueLiving)
           snakeContacted = true
           disableMovement = true
         }
