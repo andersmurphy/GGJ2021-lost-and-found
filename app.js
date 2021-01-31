@@ -16,7 +16,6 @@ let actorContacted = false
 let disableMovement = false
 const onContinueOnPlanet = () => {
     disableMovement = false
-    actorContacted = false
 }
 
 var currentStoryContent = null
@@ -52,7 +51,7 @@ const setupControls = (resources, planetContainer, prince, actor, storyContent, 
         showDialog(currentStoryContent, currentActor, prince, ghost, onContinueOnPlanet, doOnLeavePlanet)
         actorContacted = true
         disableMovement = true
-        actor.scale.x = prince.scale.x
+        snake.scale.x = prince.scale.x
       }
       if (!(r > 2.9 && 3 > r)) actorContacted = false
       thunk()

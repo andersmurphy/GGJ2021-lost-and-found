@@ -1,3 +1,5 @@
+let snake = null
+
 const showEarth = (resources, planetContainer) => {
   // Planet
   const planet = new PIXI.Sprite(resources.planet_earth.texture)
@@ -6,7 +8,7 @@ const showEarth = (resources, planetContainer) => {
   planet.anchor.set(0.5)
 
   // Snake
-  const snake = new PIXI.AnimatedSprite([resources.snake.texture])
+  snake = new PIXI.AnimatedSprite([resources.snake.texture])
   snake.width = resources.snake.texture.width
   snake.height = resources.snake.texture.height
   snake.anchor.set(0.5)
