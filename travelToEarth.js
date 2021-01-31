@@ -88,18 +88,18 @@ const ascendBirds = (delta) => {
         }
     }
     //console.log("timeSpentAscending: " + timeSpentAscending)
-    if (timeSpentAscending > 320 && !descendingToEarth) {
+    if (timeSpentAscending > 240 && !descendingToEarth) {
         doSetStarSpeedFunction(birdSpeed, -birdSpeed)
         descendingToEarth = true
         console.log("Descending")
-    } else if (descendingToEarth && timeSpentAscending > 600 && !earthIsOnScreen) {
+    } else if (descendingToEarth && timeSpentAscending > 340 && !earthIsOnScreen) {
         thePlanetContainer.removeChildren()
         thePlanetContainer.rotation = 0
         newSnake = showEarth(app.loader.resources, thePlanetContainer)
 
         thePlanetContainer.rotation = 0
         thePlanetContainer.visible = true
-        thePlanetContainer.position.x = (-thePlanetContainer.width / 2) - 50
+        thePlanetContainer.position.x = (-thePlanetContainer.width / 2)
         thePlanetContainer.position.y = app.renderer.height + thePlanetContainer.height + 500
         earthIsOnScreen = true
     } else if (earthIsOnScreen && !haveArrivedOnEarth) {
