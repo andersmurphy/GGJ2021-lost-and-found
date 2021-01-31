@@ -108,6 +108,7 @@ app.loader
   .add('princeStand', 'assets/Prince_Idle_190.png')
   .add('princeWalk1', 'assets/Prince_Walk_1.png')
   .add('princeWalk2', 'assets/Prince_Walk_2.png')
+.add('princeDead', 'assets/Prince_Dead.png')
   .add('tree', 'assets/tree.png')
   .add('snake', 'assets/snek_idle.png')
   .add('snakeBite', 'assets/snek_bite.png')
