@@ -142,8 +142,8 @@ app.loader
     prince.animationSpeed = 0.1
     app.stage.addChild(prince)
 
-    var actor = showEarth(resources, planetContainer)
+    var actor = showB612(resources, planetContainer)
 
-    setupControls(resources, planetContainer, prince, actor, princeSnakeStoryContent)
+    setupControls(resources, planetContainer, prince, actor, princeRoseStoryContent)
 
   })
