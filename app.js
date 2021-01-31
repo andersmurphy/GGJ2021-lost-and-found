@@ -19,6 +19,7 @@ app.loader
   .add('princeWalk2', 'assets/Prince_Walk_2.png')
   .add('tree', 'assets/tree.png')
   .add('snake', 'assets/snek_idle.png')
+  .add('snakeBite', 'assets/snek_bite.png')
   .add('DialogBackground', 'assets/DialogBackground.png')
   .add('ButtonNormal', 'assets/ButtonNormal.png')
   .add('ButtonActive', 'assets/ButtonActive.png')
@@ -36,13 +37,14 @@ app.loader
     planet.anchor.set(0.5)
 
     // Snake
-    const snake = new PIXI.Sprite(resources.snake.texture)
+    const snake = new PIXI.AnimatedSprite([resources.snake.texture])
     snake.width = resources.snake.texture.width
     snake.height = resources.snake.texture.height
     snake.anchor.set(0.5)
     snake.rotation = Math.PI
     snake.x = 0
     snake.y = 542
+    snake.animationSpeed = 0.1
 
     const tree2 = new PIXI.Sprite(resources.tree.texture)
     tree2.width = 200
@@ -151,5 +153,5 @@ app.loader
 
     // starSpeedX = 0.5
     // starSpeedY = 0.5
-    showDialog(princeSnakeStoryContent)
+    showDialog(princeSnakeStoryContent, snake)
   })
