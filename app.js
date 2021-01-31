@@ -54,6 +54,7 @@ const setupControls = (resources, planetContainer, prince, actor, storyContent, 
         disableMovement = true
         actor.scale.x = prince.scale.x
       }
+      if (!(r > 2.9 && 3 > r)) actorContacted = false
       thunk()
     })
 
