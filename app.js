@@ -78,7 +78,7 @@ app.loader
       prince.scale.x = 1
     }
 
-    const rotationTo2PI = rotation => rotation % (2 * Math.PI) * -1
+    const rotationTo2PI = rotation => Math.abs(rotation % (2 * Math.PI))
 
     let snakeContacted = false
     let disableMovement = false
