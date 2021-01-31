@@ -13,7 +13,7 @@ const app = new PIXI.Application(
 document.body.appendChild(app.view)
 
 const onContinueLiving = () => {
-  console.log("onContinueLiving")
+  disableMovement = false
 }
 
 app.loader
@@ -50,14 +50,6 @@ app.loader
     snake.y = 542
     snake.animationSpeed = 0.1
 
-    const tree2 = new PIXI.Sprite(resources.tree.texture)
-    tree2.width = 200
-    tree2.height = 300
-    tree2.anchor.set(0.5)
-    tree2.x = 600
-    tree2.y = 0
-    tree2.rotation = Math.PI / 2
-
     startStarfield()
 
     // Planet Container
@@ -67,7 +59,6 @@ app.loader
     planetContainer.position.y = app.renderer.height + 300
     planetContainer.addChild(planet)
     planetContainer.addChild(snake)
-    planetContainer.addChild(tree2)
     app.stage.addChild(planetContainer)
 
     // Prince
@@ -89,12 +80,16 @@ app.loader
 
     const rotationTo2PI = rotation => rotation % (2 * Math.PI) * -1
 
+    let snakeContacted = false
+    let disableMovement = false
+
     app.ticker.add(
       () => {
         let r = rotationTo2PI(planetContainer.rotation)
-        if (r > 3 && 3.4 > r) {
-          console.log("hello")
-        } else {
+        if (r > 3 && 3.4 > r && !snakeContacted) {
+          showDialog(princeSnakeStoryContent)
+          snakeContacted = true
+          disableMovement = true
         }
         thunk()
       })
@@ -125,6 +120,7 @@ app.loader
       switch (event.key) {
         case "a":
           thunk = () => {
+            if (disableMovement) return
             planetContainer.rotation += 0.05
             prince.scale.x = 1
             if (!prince.playing) {
@@ -137,6 +133,7 @@ app.loader
           break
         case "d":
           thunk = () => {
+            if (disableMovement) return
             planetContainer.rotation += -0.05
             prince.scale.x = -1
             if (!prince.playing) {
@@ -157,5 +154,5 @@ app.loader
 
     // starSpeedX = 0.5
     // starSpeedY = 0.5
-    showDialog(princeSnakeStoryContent, snake, prince, onContinueLiving)
+
   })
