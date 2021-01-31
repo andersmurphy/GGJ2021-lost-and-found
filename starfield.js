@@ -63,7 +63,7 @@ const starfieldTwinkles = delta => {
                 const star = stars[i]
                 const starSpeed = starSpeeds[i]
                 star.position.x += delta * starSpeedX * starSpeed
-                star.position.y += delta * starSpeedX * starSpeed
+                star.position.y += delta * starSpeedY * starSpeed
 
                 if (star.position.x < 0
                     || star.position.x >= w

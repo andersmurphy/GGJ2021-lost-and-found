@@ -150,11 +150,11 @@ app.loader
     prince.animationSpeed = 0.1
     app.stage.addChild(prince)
 
-    // var actor = showB612(resources, planetContainer)
+    var actor = showB612(resources, planetContainer)
 
-    // setupControls(resources, planetContainer, prince, actor, princeRoseStoryContent, (rose, prince) => doTravelToEarth(rose, prince, planetContainer, setStarSpeedFunction))
-    var actor = showEarth(resources, planetContainer)
+    setupControls(resources, planetContainer, prince, actor, princeRoseStoryContent, (rose, prince) => doTravelToEarth(rose, prince, planetContainer, setStarSpeedFunction))
+    // var actor = showEarth(resources, planetContainer)
 
-    setupControls(resources, planetContainer, prince, actor, princeSnakeStoryContent, (rose, prince) => doTravelToB612(rose, prince))
+    // setupControls(resources, planetContainer, prince, actor, princeSnakeStoryContent, (rose, prince) => doTravelToB612(rose, prince))
 
   })

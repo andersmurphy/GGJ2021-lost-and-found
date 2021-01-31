@@ -23,7 +23,7 @@ const startBirds = () => {
         app.loader.resources.birds_only_2.texture])
     birds.width = app.loader.resources.birds_only_1.texture.width
     birds.height = app.loader.resources.birds_only_1.texture.height
-    birds.x = app.renderer.width / 2
+    birds.x = (app.renderer.width / 2) + 400
     birds.y = 0// -(birds.height / 2)
     birds.anchor.x = 0.5
     birds.anchor.y = 0.5
@@ -34,12 +34,16 @@ const startBirds = () => {
     app.ticker.add(descendBirds)
 }
 
-const birdSpeed = 2
+const birdSpeed = 2.1
 
 const descendBirds = (delta) => {
+    birds.position.x -= delta * birdSpeed
     birds.position.y += delta * birdSpeed
     //console.log("Y: " + birds.position.y)
-    if (birds.position.y >= 300) {
+    if (birds.position.x < app.renderer.width / 2) {
+        birds.position.x = app.renderer.width / 2
+    }
+    if (birds.position.y >= 350) {
         app.ticker.remove(descendBirds)
         ascendBirdsWithPrince(birds.position.y)
     }
@@ -70,11 +74,11 @@ const ascendBirds = (delta) => {
         }
     }
     //console.log("timeSpentAscending: " + timeSpentAscending)
-    if (timeSpentAscending > 500 && !descendingToEarth) {
+    if (timeSpentAscending > 400 && !descendingToEarth) {
         doSetStarSpeedFunction(birdSpeed, -birdSpeed)
         descendingToEarth = true
         console.log("Descending")
-    } else if (descendingToEarth && timeSpentAscending > 10 && !earthIsOnScreen) {
+    } else if (descendingToEarth && timeSpentAscending > 800 && !earthIsOnScreen) {
 
     }
     timeSpentAscending += delta
