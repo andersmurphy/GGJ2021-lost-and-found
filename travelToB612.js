@@ -21,21 +21,29 @@ const doSnakeBite = (snake) => {
     snake.play()
 }
 
+let rotationSpeed = 0.01
 const rotatePrinceToHorizontal = (delta) => {
-    travellingPrince.rotation += 0.05
-    if (travellingPrince.rotation >= 1.6) {
+  travellingPrince.scale.x = -1
+  travellingPrince.anchor.set(1, 1)
+  travellingPrince.y += 5
+  rotationSpeed = rotationSpeed * 1.5
+  travellingPrince.rotation += rotationSpeed
+  if (travellingPrince.rotation >= 1.6) {
+    travellingPrince.rotation = 0
+    travellingPrince.y += 50
+    travellingPrince.textures = [app.loader.resources.princeDead.texture]
+
         app.ticker.remove(rotatePrinceToHorizontal)
     }
 }
 
-// prince falls over, 
+// prince falls over,
 const doPrinceCollapsing = (prince) => {
     //prince.
     app.ticker.add(rotatePrinceToHorizontal)
 }
 
-// prince is replaced with dead-prince, 
-// birds descend from above, 
-// ghost-prince rises from body, 
+// prince is replaced with dead-prince,
+// birds descend from above,
+// ghost-prince rises from body,
 // connects to birds, flies to B612
-
