@@ -1,24 +1,26 @@
-var travellingPrince = null
+let travellingPrince = null
+let travellingGhost  = null
 
-const doTravelToB612 = (snake, prince) => {
-    travellingPrince = prince
-    doSnakeBite(snake)
-    snake.onComplete = function () {
-        doPrinceCollapsing(prince)
-    }
+const doTravelToB612 = (snake, prince, ghost) => {
+  travellingPrince = prince
+  travellingGhost = ghost
+  doSnakeBite(snake)
+  snake.onComplete = function() {
+    doPrinceCollapsing()
+  }
 }
 
 // snake does bite animation
 const doSnakeBite = (snake) => {
-    snake.textures = [
-        app.loader.resources.snake.texture,
-        app.loader.resources.snakeBite.texture,
-        app.loader.resources.snakeBite.texture,
-        app.loader.resources.snakeBite.texture,
-        app.loader.resources.snake.texture
-    ]
-    snake.loop = false
-    snake.play()
+  snake.textures = [
+    app.loader.resources.snake.texture,
+    app.loader.resources.snakeBite.texture,
+    app.loader.resources.snakeBite.texture,
+    app.loader.resources.snakeBite.texture,
+    app.loader.resources.snake.texture
+  ]
+  snake.loop = false
+  snake.play()
 }
 
 let rotationSpeed = 0.01
@@ -32,15 +34,20 @@ const rotatePrinceToHorizontal = (delta) => {
     travellingPrince.rotation = 0
     travellingPrince.y += 50
     travellingPrince.textures = [app.loader.resources.princeDead.texture]
+    app.ticker.remove(rotatePrinceToHorizontal)
+    travellingGhost.visible = true
+  }
+}
 
-        app.ticker.remove(rotatePrinceToHorizontal)
-    }
+const flyGhostAway = (delta) => {
+  if (travellingGhost.visible === true) travellingGhost.y -= 1
 }
 
 // prince falls over,
-const doPrinceCollapsing = (prince) => {
-    //prince.
-    app.ticker.add(rotatePrinceToHorizontal)
+const doPrinceCollapsing = () => {
+  //prince.
+  app.ticker.add(rotatePrinceToHorizontal)
+  app.ticker.add(flyGhostAway)
 }
 
 // prince is replaced with dead-prince,

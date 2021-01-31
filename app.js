@@ -22,6 +22,7 @@ const onContinueOnPlanet = () => {
 var currentStoryContent = null
 var currentActor = null
 var doOnLeavePlanet = null
+var ghost = null
 
 const startEarthStory = (newSnake) => {
   currentStoryContent = princeSnakeStoryContent
@@ -37,77 +38,77 @@ const setupControls = (resources, planetContainer, prince, actor, storyContent, 
   doOnLeavePlanet = onLeavePlanet
 
   let thunk = () => {
-      planetContainer.rotation = 0
-      prince.textures = [resources.princeStand.texture]
-      prince.scale.x = 1
+    planetContainer.rotation = 0
+    prince.textures = [resources.princeStand.texture]
+    prince.scale.x = 1
   }
 
   const rotationTo2PI = rotation => Math.abs(rotation % (2 * Math.PI))
 
   app.ticker.add(
-      () => {
+    () => {
       let r = rotationTo2PI(planetContainer.rotation)
       if (r > 2.9 && 3 > r && !actorContacted) {
-          showDialog(currentStoryContent, currentActor, prince, onContinueOnPlanet, doOnLeavePlanet)
-          actorContacted = true
-          disableMovement = true
-          actor.scale.x = prince.scale.x
+        showDialog(currentStoryContent, currentActor, prince, ghost, onContinueOnPlanet, doOnLeavePlanet)
+        actorContacted = true
+        disableMovement = true
+        actor.scale.x = prince.scale.x
       }
       thunk()
-      })
+    })
 
   const upListener = event => {
-      switch (event.key) {
+    switch (event.key) {
       case "a":
-          thunk = () => {
+        thunk = () => {
           if (prince.playing) {
-              prince.textures = [resources.princeStand.texture]
-              prince.stop()
+            prince.textures = [resources.princeStand.texture]
+            prince.stop()
           }
-          }
-          break
+        }
+        break
       case "d":
-          thunk = () => {
+        thunk = () => {
           if (prince.playing) {
-              prince.textures = [resources.princeStand.texture]
-              prince.stop()
+            prince.textures = [resources.princeStand.texture]
+            prince.stop()
           }
-          }
-          break
+        }
+        break
       default:
-      }
+    }
   }
 
   const downListener = event => {
-      switch (event.key) {
+    switch (event.key) {
       case "a":
-          thunk = () => {
+        thunk = () => {
           if (disableMovement) return
           planetContainer.rotation += 0.05
           prince.scale.x = 1
           if (!prince.playing) {
-              prince.textures =
+            prince.textures =
               [resources.princeWalk1.texture,
               resources.princeWalk2.texture]
-              prince.play()
+            prince.play()
           }
-          }
-          break
+        }
+        break
       case "d":
-          thunk = () => {
+        thunk = () => {
           if (disableMovement) return
           planetContainer.rotation += -0.05
           prince.scale.x = -1
           if (!prince.playing) {
-              prince.textures =
+            prince.textures =
               [resources.princeWalk1.texture,
               resources.princeWalk2.texture]
-              prince.play()
+            prince.play()
           }
-          }
-          break
+        }
+        break
       default:
-      }
+    }
   }
 
   document.addEventListener("keydown", downListener, false)
@@ -125,7 +126,7 @@ app.loader
   .add('princeWalk1', 'assets/Prince_Walk_1.png')
   .add('princeWalk2', 'assets/Prince_Walk_2.png')
   .add('princeDead', 'assets/Prince_Dead.png')
-  .add('tree', 'assets/tree.png')
+  .add('princeFlying', 'assets/Prince_Flying.png')
   .add('snake', 'assets/snek_idle.png')
   .add('snakeBite', 'assets/snek_bite.png')
   .add('DialogBackground', 'assets/DialogBackground.png')
@@ -166,11 +167,17 @@ app.loader
     prince.animationSpeed = 0.1
     app.stage.addChild(prince)
 
+    // ghost
+    ghost = new PIXI.Sprite(app.loader.resources.princeFlying.texture)
+    ghost.width = resources.princeFlying.texture.width
+    ghost.height = resources.princeFlying.texture.height
+    ghost.x = app.renderer.width / 2
+    ghost.y = app.renderer.height - 400
+    ghost.visible = false
+    app.stage.addChild(ghost)
+
     var actor = showB612(resources, planetContainer)
 
     setupControls(resources, planetContainer, prince, actor, princeRoseStoryContent, (rose, prince) => doTravelToEarth(rose, prince, planetContainer, setStarSpeedFunction))
     // var actor = showEarth(resources, planetContainer)
-
-    // setupControls(resources, planetContainer, prince, actor, princeSnakeStoryContent, (rose, prince) => doTravelToB612(rose, prince))
-
   })
