@@ -12,7 +12,29 @@ const app = new PIXI.Application(
 // can then insert into the DOM
 document.body.appendChild(app.view)
 
+let actorContacted = false
+let disableMovement = false
+const onContinueOnPlanet = () => {
+    disableMovement = false
+    actorContacted = false
+}
+
+var currentStoryContent = null
+var currentActor = null
+var doOnLeavePlanet = null
+
+const startEarthStory = (newSnake) => {
+  currentStoryContent = princeSnakeStoryContent
+  currentActor = newSnake
+  doOnLeavePlanet = doTravelToB612
+  disableMovement = false
+  actorContacted = false
+}
+
 const setupControls = (resources, planetContainer, prince, actor, storyContent, onLeavePlanet) => {
+  currentStoryContent = storyContent
+  currentActor = actor
+  doOnLeavePlanet = onLeavePlanet
 
   let thunk = () => {
       planetContainer.rotation = 0
@@ -22,17 +44,11 @@ const setupControls = (resources, planetContainer, prince, actor, storyContent, 
 
   const rotationTo2PI = rotation => Math.abs(rotation % (2 * Math.PI))
 
-  let actorContacted = false
-  let disableMovement = false
-  const onContinueOnPlanet = () => {
-      disableMovement = false
-  }
-
   app.ticker.add(
       () => {
       let r = rotationTo2PI(planetContainer.rotation)
       if (r > 2.9 && 3 > r && !actorContacted) {
-          showDialog(storyContent, actor, prince, onContinueOnPlanet, onLeavePlanet)
+          showDialog(currentStoryContent, currentActor, prince, onContinueOnPlanet, doOnLeavePlanet)
           actorContacted = true
           disableMovement = true
           actor.scale.x = prince.scale.x
