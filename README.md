@@ -1,4 +1,6 @@
-[Play Game](https://andersmurphy.github.io/GGJ2021-lost-and-found/)
+# Little Bit Lost Prince
+
+[PLAY GAME!](https://andersmurphy.github.io/GGJ2021-lost-and-found/)
 
 ## Local Development
 
