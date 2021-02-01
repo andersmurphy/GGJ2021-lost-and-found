@@ -38,7 +38,7 @@ Push your changes and the project will deploy automatically to:
 
 https://andersmurphy.github.io/GGJ2021-lost-and-found/
 
-## Design an Concept Art
+## Design & Concept Art
 
 This years theme was 'Lost and Found'. Art by [Alicja Cioch](https://globalgamejam.org/users/alicjac).
 
