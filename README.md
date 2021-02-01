@@ -14,13 +14,17 @@ Install npm:
 
 https://nodejs.org/en/
 
-Install http-server:
+Mac: Install live-server:
 
 `npm install -g live-server`
 
 Mac: Start server in project root:
 
-`live-server`
+`npm install -g live-server`
+
+Windows: Install live-server:
+
+`http-server`
 
 Windows: Start server in project root:
 
