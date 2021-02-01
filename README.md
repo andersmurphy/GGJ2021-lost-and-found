@@ -20,11 +20,11 @@ Mac: Install live-server:
 
 Mac: Start server in project root:
 
-`npm install -g live-server`
+`live-server`
 
-Windows: Install live-server:
+Windows: Install http-server:
 
-`http-server`
+`npm install -g http-server`
 
 Windows: Start server in project root:
 
