@@ -2,8 +2,6 @@
 
 <img src="https://user-images.githubusercontent.com/5931605/106439022-22078e00-646f-11eb-8960-8b813274d6e0.jpg" width="600" />
 
-![](){:width="300px"}
-
 [PLAY GAME!](https://andersmurphy.github.io/GGJ2021-lost-and-found/)
 
 ## Project & Team
