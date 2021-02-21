@@ -44,13 +44,13 @@ const rotatePrinceToHorizontal = (delta) => {
     travellingGhost.visible = true
     startingPlanetaryRotation = finPlanetContainer.rotation
     relativePlanetaryRotation = 0
-    console.log(`(${earthSnake.x}, ${earthSnake.y})`)
+    //console.log(`(${earthSnake.x}, ${earthSnake.y})`)
     let newX = earthSnake.x - 185
     if (travellingPrince.scale.x == 1) {
       newX = earthSnake.x + 175
     }
     const newY = earthSnake.y - 60
-    console.log(`(${newX}, ${newY})`)
+    // console.log(`(${newX}, ${newY})`)
     travellingPrince.parent.removeChild(travellingPrince)
     finPlanetContainer.addChild(travellingPrince)
     travellingPrince.x = newX

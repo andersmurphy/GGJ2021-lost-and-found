@@ -19,7 +19,7 @@ const doTravelToEarth = (rose, prince, planetContainer, setStarSpeedFunction) =>
 const birdSpeed = 2.1
 
 const startBirds = () => {
-    console.log("descendBirds")
+    // console.log("descendBirds")
     birds = new PIXI.AnimatedSprite([
         app.loader.resources.birds_only_1.texture,
         app.loader.resources.birds_only_2.texture])
@@ -73,7 +73,7 @@ const ascendBirds = (delta) => {
         thePlanetContainer.position.y += delta * birdSpeed
 
         if (thePlanetContainer.position.y > app.renderer.height + 450) {
-            console.log("b612IsOff Screen")
+            // console.log("b612IsOff Screen")
             thePlanetContainer.visible = false
             b612IsOnScreen = false
         }
@@ -82,9 +82,9 @@ const ascendBirds = (delta) => {
     if (timeSpentAscending > 320 && !descendingToEarth) {
         doSetStarSpeedFunction(birdSpeed, -birdSpeed)
         descendingToEarth = true
-        console.log("Descending")
+        // console.log("Descending")
     } else if (descendingToEarth && timeSpentAscending > 380 && !earthIsOnScreen) {
-        console.log("earthIsOnScreen")
+        // console.log("earthIsOnScreen")
         thePlanetContainer.removeChildren()
         thePlanetContainer.rotation = 0
         thePlanetContainer.visible = true
@@ -98,7 +98,7 @@ const ascendBirds = (delta) => {
         thePlanetContainer.position.y -= delta * birdSpeed
 
         if (thePlanetContainer.position.y <= app.renderer.height + 170) {
-            console.log("haveArrivedOnEarth")
+            // console.log("haveArrivedOnEarth")
             thePlanetContainer.position.x = app.renderer.width / 2
             thePlanetContainer.position.y = app.renderer.height + 170
             haveArrivedOnEarth = true

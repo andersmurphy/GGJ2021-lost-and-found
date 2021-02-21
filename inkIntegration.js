@@ -72,12 +72,12 @@ const onContinue = () => {
   } else {
     if (!story.canContinue
       && story.currentChoices.length == 0) {
-      console.log("END")
+      //console.log("END")
       if (story.variablesState["choseDeath"] == true) {
-        console.log("Chose death")
+        //console.log("Chose death")
         doLeavePlanet(theSnake, thePrince, theGhost, storyPlanetContainer)
       } else {
-        console.log("No death")
+        //console.log("No death")
         doContinueLiving()
       }
       storyContainer.parent.removeChild(storyContainer)
