@@ -3,11 +3,13 @@ var thePrince = null
 var theGhost = null
 var doContinueLiving = null
 var doLeavePlanet = null
+var storyPlanetContainer
 
-const showDialog = (inkStoryContent, snake, prince, ghost, onContinueLiving, onLeavePlanet) => {
+const showDialog = (inkStoryContent, snake, prince, ghost, planetContainer, onContinueLiving, onLeavePlanet) => {
   theSnake = snake
   thePrince = prince
   theGhost = ghost
+  storyPlanetContainer = planetContainer
   doContinueLiving = onContinueLiving
   doLeavePlanet = onLeavePlanet
   // add dialog box beside prince
@@ -73,7 +75,7 @@ const onContinue = () => {
       console.log("END")
       if (story.variablesState["choseDeath"] == true) {
         console.log("Chose death")
-        doLeavePlanet(theSnake, thePrince, theGhost)
+        doLeavePlanet(theSnake, thePrince, theGhost, storyPlanetContainer)
       } else {
         console.log("No death")
         doContinueLiving()
@@ -102,75 +104,11 @@ const showNextPieceOfStory = (firstTime) => {
     let style = new PIXI.TextStyle({ fontFamily: 'Arial', fontSize: 24, fill: 0x101010, align: 'left' })
     var lines = LayedOutText(currentlyShowingText, style, contentWidth, "left")
     setContent(lines)
-
-    {
-      // var tags = story.currentTags;
-      // // Any special tags included with this line
-      // var customClasses = [];
-      // for(var i=0; i<tags.length; i++) {
-      //     var tag = tags[i];
-
-      //     // Detect tags of the form "X: Y". Currently used for IMAGE and CLASS but could be
-      //     // customised to be used for other things too.
-      //     var splitTag = splitPropertyTag(tag);
-
-      //     // IMAGE: src
-      //     if( splitTag && splitTag.property == "IMAGE" ) {
-      //         var imageElement = document.createElement('img');
-      //         imageElement.src = splitTag.val;
-      //         storyContainer.appendChild(imageElement);
-
-      //         showAfter(delay, imageElement);
-      //         delay += 200.0;
-      //     }
-
-      //     // CLASS: className
-      //     else if( splitTag && splitTag.property == "CLASS" ) {
-      //         customClasses.push(splitTag.val);
-      //     }
-
-      //     // CLEAR - removes all existing content.
-      //     // RESTART - clears everything and restarts the story from the beginning
-      //     else if( tag == "CLEAR" || tag == "RESTART" ) {
-      //         removeAll("p");
-      //         removeAll("img");
-
-      //         // Comment out this line if you want to leave the header visible when clearing
-      //         setVisible(".header", false);
-
-      //         if( tag == "RESTART" ) {
-      //             restart();
-      //             return;
-      //         }
-      //     }
-      // }
-
-      // // Create paragraph element (initially hidden)
-      // var paragraphElement = document.createElement('p');
-      // paragraphElement.innerHTML = paragraphText;
-      // storyContainer.appendChild(paragraphElement);
-
-      // // Add any custom classes derived from ink tags
-      // for(var i=0; i<customClasses.length; i++)
-      //     paragraphElement.classList.add(customClasses[i]);
-
-      // // Fade in paragraph after a short delay
-      // showAfter(delay, paragraphElement);
-      // delay += 200.0;
-    }
   }
   else if (!story.canContinue
     && areNewChoices()) {
     showChoices()
   }
-  // // Extend height to fit
-  // // We do this manually so that removing elements and creating new ones doesn't
-  // // cause the height (and therefore scroll) to jump backwards temporarily.
-  // storyContainer.style.height = contentBottomEdgeY()+"px";
-
-  // if( !firstTime )
-  //     scrollDown(previousBottomEdge);
-
 }
 
 const showChoices = () => {

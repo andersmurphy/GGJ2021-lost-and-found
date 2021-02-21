@@ -90,8 +90,8 @@ const ascendBirds = (delta) => {
         thePlanetContainer.visible = true
         newSnake = showEarth(app.loader.resources, thePlanetContainer)
 
-        thePlanetContainer.position.x = (-thePlanetContainer.width / 2)
-        thePlanetContainer.position.y = app.renderer.height + thePlanetContainer.height + 500
+        thePlanetContainer.position.x = (-thePlanetContainer.width / 2) - 30
+        thePlanetContainer.position.y = app.renderer.height + thePlanetContainer.height + 335
         earthIsOnScreen = true
     } else if (earthIsOnScreen && !haveArrivedOnEarth) {
         thePlanetContainer.position.x += delta * birdSpeed

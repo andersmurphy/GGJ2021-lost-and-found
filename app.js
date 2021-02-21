@@ -47,11 +47,13 @@ const setupControls = (resources, planetContainer, prince, actor, storyContent, 
   app.ticker.add(
     () => {
       let r = rotationTo2PI(planetContainer.rotation)
-      if (r > 2.9 && 3 > r && !actorContacted) {
-        showDialog(currentStoryContent, currentActor, prince, ghost, onContinueOnPlanet, doOnLeavePlanet)
+      if (r > 2.9 && 3 > r && !actorContacted && prince.visible) {
+        showDialog(currentStoryContent, currentActor, prince, ghost, planetContainer, onContinueOnPlanet, doOnLeavePlanet)
         actorContacted = true
         disableMovement = true
-        snake.scale.x = prince.scale.x
+        if (snake) {
+          snake.scale.x = prince.scale.x
+        }
       }
       if (!(r > 2.9 && 3 > r)) actorContacted = false
       thunk()
@@ -179,6 +181,6 @@ app.loader
 
     var actor = showB612(resources, planetContainer)
 
-    setupControls(resources, planetContainer, prince, actor, princeRoseStoryContent, (rose, prince) => doTravelToEarth(rose, prince, planetContainer, setStarSpeedFunction))
+    setupControls(resources, planetContainer, prince, actor, princeRoseStoryContent, (rose, prince, _, __) => doTravelToEarth(rose, prince, planetContainer, setStarSpeedFunction))
     // var actor = showEarth(resources, planetContainer)
   })
